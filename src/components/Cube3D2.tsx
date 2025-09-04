@@ -1,9 +1,16 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import './Cube3D.css';
 
 const Cube3D2: React.FC = () => {
   return (
-    <div className="cube3d-container">
+    <motion.div
+      className="cube3d-container"
+      initial={{ opacity: 0, scale: 0.8 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true }}
+    >
       <div className="cube3d">
         <div className="face front">Web Designing</div>
         <div className="face back">Digital Marketing</div>
@@ -12,7 +19,7 @@ const Cube3D2: React.FC = () => {
         <div className="face top">Services</div>
         <div className="face bottom">Services</div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

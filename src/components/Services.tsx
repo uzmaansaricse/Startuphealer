@@ -10,6 +10,7 @@ import {
 } from "react-icons/fa";
 import { IconType } from "react-icons";
 import React from "react";
+import { motion } from "framer-motion";
 
 interface Service {
   title: string;
@@ -78,11 +79,44 @@ const services: Service[] = [
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+    },
+  },
+};
+
 export default function Services() {
   return (
-    <section className="py-12">
+    <motion.section
+      className="py-12"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true }}
+    >
       {/* Section Heading */}
-      <div className="text-center mb-10">
+      <motion.div
+        className="text-center mb-10"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        viewport={{ once: true }}
+      >
         <h2 className="text-3xl md:text-4xl font-extrabold text-white">
           Our <span className="text-blue-400">Services</span>
         </h2>
@@ -91,18 +125,27 @@ export default function Services() {
           We provide a wide range of professional services to help your business
           grow, comply, and succeed.
         </p>
-      </div>
+      </motion.div>
 
       {/* Services Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-2 gap-8"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+      >
         {services.map((service, idx) => (
-          <div
+          <motion.div
             key={idx}
-            className={`relative max-w-md mx-auto p-6 rounded-2xl shadow-lg 
-              bg-black/40 border border-white/10 backdrop-blur-md 
-              transition-transform transform hover:scale-105 
-              hover:shadow-2xl hover:border-transparent 
+            className={`relative max-w-md mx-auto p-6 rounded-2xl shadow-lg
+              bg-black/40 border border-white/10 backdrop-blur-md
+              transition-transform transform hover:scale-105
+              hover:shadow-2xl hover:border-transparent
               hover:bg-gradient-to-r ${service.color}`}
+            variants={itemVariants}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             {/* Icon */}
             <div className="flex items-center justify-center w-14 h-14 rounded-full bg-white/10 mb-4">
@@ -125,9 +168,9 @@ export default function Services() {
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
         ))}
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 }
