@@ -1,19 +1,19 @@
 import React from 'react';
 import './Cube3D.css';
 
-const Cube3D: React.FC = () => {
+const Cube3D2: React.FC = () => {
   return (
     <div className="cube3d-container">
       <div className="cube3d">
         <div className="face front">Web Designing</div>
         <div className="face back">Digital Marketing</div>
-        <div className="face right">GST</div>
-        <div className="face left">ISO 9001</div>
-        <div className="face top">Trademark</div>
-        <div className="face bottom">Funding</div>
+        <div className="face right">Services</div>
+        <div className="face left">Services</div>
+        <div className="face top">Services</div>
+        <div className="face bottom">Services</div>
       </div>
     </div>
   );
 };
 
-export default Cube3D; 
+export default Cube3D2;

@@ -74,7 +74,7 @@ const Hero: React.FC = () => {
           <span className="text-xs md:text-sm text-gray-300 font-medium mt-1">star client satisfaction</span>
         </div>
       </div>
-      <a href="#contact" className="inline-block bg-blue-600 text-white px-8 py-3 rounded-full font-semibold shadow hover:bg-blue-400 transition">Get Started</a>
+      <a href="/services" className="inline-block bg-blue-600 text-white px-8 py-3 rounded-full font-semibold shadow hover:bg-blue-400 transition">Get Started</a>
       <style>{`
         .kpi-3d {
           text-shadow: 0 4px 16px #2563eb, 0 2px 8px #0008;
