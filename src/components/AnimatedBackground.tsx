@@ -133,6 +133,31 @@ const AnimatedBackground: React.FC = () => {
           opacity: 0.8,
         }}
       />
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        zIndex: -1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: 'white',
+        fontSize: '24px',
+        textAlign: 'center',
+        padding: '20px',
+        pointerEvents: 'none',
+      }}>
+        <h1>Welcome to Our Services</h1>
+        <p>We specialize in providing end-to-end business solutions designed to help startups and growing companies succeed. From government registrations and certifications to branding, funding, and digital growth — our services are tailored to give your business the right foundation and a competitive edge.</p>
+        <p>Web Designing Digital Marketing GST ISO 9001 Trademark Funding</p>
+        <h2>Meet the Team</h2>
+        <p>Lalit paliwal Founder</p>
+        <p>Amit Kumar Co-Founder & Operations</p>
+        <p>Priya Singh Startup Consultant</p>
+      </div>
     </>
   );
 };
