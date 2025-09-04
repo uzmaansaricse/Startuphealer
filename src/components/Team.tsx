@@ -1,6 +1,7 @@
 import React from 'react';
 
 const teamMembers = [
+  { name: 'Lalit paliwal', role: 'Founder ', img: '/logo512.png' },
   { name: 'Amit Kumar', role: 'Co-Founder & Operations', img: '/logo512.png' },
   { name: 'Priya Singh', role: 'Startup Consultant', img: '/logo192.png' },
 ];
