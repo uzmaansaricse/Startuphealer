@@ -1,3 +1,4 @@
+// src/components/Cube3D.tsx
 import React from 'react';
 import { motion } from 'framer-motion';
 import './Cube3D.css';
@@ -23,4 +24,4 @@ const Cube3D: React.FC = () => {
   );
 };
 
-export default Cube3D; 
+export default Cube3D;

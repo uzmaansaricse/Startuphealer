@@ -13,8 +13,8 @@ import FAQPage from './pages/FAQ';
 import ContactPage from './pages/Contact';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
-import UserPanel from './pages/UserPanel';
-import AdminPanel from './pages/AdminPanel';
+// import UserPanel from './pages/UserPanel';
+// import AdminPanel from './pages/AdminPanel';
 import ProtectedRoute from './components/ProtectedRoute';
 import './index.css';
 
@@ -23,7 +23,7 @@ function App() {
     <Provider store={store}>
       <Router>
         <div className="App relative bg-gray-900 min-h-screen">
-          <AnimatedBackground />
+          {/* <AnimatedBackground /> */}
           <div style={{ position: 'relative', zIndex: 1 }}>
             <Navbar />
             <Routes>
@@ -35,7 +35,7 @@ function App() {
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
-              <Route 
+              {/* <Route 
                 path="/user-panel" 
                 element={
                   <ProtectedRoute requiredRole="user">
@@ -50,7 +50,7 @@ function App() {
                     <AdminPanel />
                   </ProtectedRoute>
                 } 
-              />
+              /> */}
             </Routes>
             <Footer />
           </div>

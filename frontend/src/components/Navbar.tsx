@@ -1,20 +1,21 @@
+// src/components/Navbar.tsx
 import React from 'react';
 import { NAV_ITEMS } from '../utils/constants';
 import { Link } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
   return (
-    <nav className="w-full fixed top-0 left-0 bg-gray-900 shadow z-50">
+    <nav className="w-full fixed top-0 left-0 bg-white/95 backdrop-blur-md shadow-md z-50 border-b border-emerald-100">
       <div className="max-w-7xl mx-auto px-4 flex justify-between items-center h-16">
         <div className="flex items-center">
-          {/* Logo thoda bada */}
+          {/* Logo */}
           <img
             src="/st_logo.jpeg"
             alt="Startup Healer Logo"
             className="h-12 w-auto mr-3"
           />
-          {/* Brand name ka size thoda bada */}
-          <span className="font-bold text-2xl text-white">
+          {/* Brand name */}
+          <span className="font-bold text-2xl text-emerald-700">
             Startup Healer
           </span>
         </div>
@@ -23,7 +24,7 @@ const Navbar: React.FC = () => {
             <Link
               key={item.name}
               to={item.href}
-              className="text-gray-200 hover:text-blue-400 font-medium transition-colors"
+              className="text-gray-700 hover:text-emerald-600 font-medium transition-colors"
             >
               {item.name}
             </Link>
