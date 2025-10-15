@@ -1,6 +1,8 @@
+// src/pages/About.tsx (or src/components/About.tsx)
 import React from "react";
 import { Tilt } from "react-tilt";
 import { motion } from "framer-motion";
+import bgimage from '../assets/StartupHealer.png';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -27,17 +29,20 @@ const About: React.FC = () => {
   return (
     <motion.section
       id="about"
-      className="py-24 bg-gradient-to-b from-gray-900 via-gray-950 to-gray-900 relative"
+      className="py-24 relative min-h-screen bg-fixed bg-cover bg-center"
+      style={{ backgroundImage: `url(${bgimage})` }}
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
       viewport={{ once: true }}
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      {/* Light overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white/50 via-emerald-50/60 to-white/70 pointer-events-none" />
 
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
         {/* Heading */}
         <motion.h2
-          className="text-5xl font-extrabold mb-6 text-white drop-shadow-lg"
+          className="text-5xl font-extrabold mb-6 text-gray-800 drop-shadow-sm"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -48,7 +53,7 @@ const About: React.FC = () => {
 
         {/* Short intro */}
         <motion.p
-          className="text-gray-300 text-lg leading-relaxed mb-12 max-w-3xl mx-auto"
+          className="text-gray-700 text-lg leading-relaxed mb-12 max-w-3xl mx-auto"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
@@ -56,9 +61,9 @@ const About: React.FC = () => {
         >
           We are a team of passionate professionals helping startups and enterprises
           achieve success through technology, creativity, and strategy.
-          Our work culture is rooted in <span className="text-indigo-400 font-semibold">innovation</span>,
-          <span className="text-indigo-400 font-semibold"> collaboration</span>, and
-          <span className="text-indigo-400 font-semibold"> excellence</span>.
+          Our work culture is rooted in <span className="text-emerald-600 font-semibold">innovation</span>,
+          <span className="text-emerald-600 font-semibold"> collaboration</span>, and
+          <span className="text-emerald-600 font-semibold"> excellence</span>.
         </motion.p>
 
         {/* Mission & Vision */}
@@ -81,11 +86,11 @@ const About: React.FC = () => {
           ].map((item, idx) => (
             <motion.div key={idx} variants={itemVariants}>
               <Tilt options={{ max: 15, scale: 1.05, speed: 800 }}>
-                <div className="bg-gray-800/90 p-8 rounded-2xl shadow-xl border border-gray-700 hover:border-indigo-500 transition-all duration-300">
-                  <h3 className="text-2xl font-semibold text-indigo-400 mb-4">
+                <div className="bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-xl border-2 border-emerald-200 hover:border-emerald-400 hover:shadow-2xl transition-all duration-300">
+                  <h3 className="text-2xl font-semibold text-emerald-600 mb-4">
                     {item.title}
                   </h3>
-                  <p className="text-gray-300 text-base">{item.desc}</p>
+                  <p className="text-gray-700 text-base leading-relaxed">{item.desc}</p>
                 </div>
               </Tilt>
             </motion.div>
@@ -101,7 +106,7 @@ const About: React.FC = () => {
           viewport={{ once: true }}
         >
           <motion.h3
-            className="text-3xl font-bold text-white mb-8"
+            className="text-3xl font-bold text-gray-800 mb-8"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -136,11 +141,11 @@ const About: React.FC = () => {
             ].map((item, idx) => (
               <motion.div key={idx} variants={itemVariants}>
                 <Tilt options={{ max: 20, scale: 1.07, speed: 600 }}>
-                  <div className="bg-gradient-to-br from-gray-800 via-gray-850 to-gray-900 p-6 rounded-2xl shadow-lg hover:shadow-2xl hover:border-indigo-400 border border-gray-700 transition-all duration-300">
-                    <h4 className="text-xl font-semibold text-white mb-3">
+                  <div className="bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-lg hover:shadow-2xl hover:border-emerald-400 border-2 border-emerald-200 transition-all duration-300">
+                    <h4 className="text-xl font-semibold text-gray-800 mb-3">
                       {item.title}
                     </h4>
-                    <p className="text-gray-400 text-sm">{item.desc}</p>
+                    <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
                   </div>
                 </Tilt>
               </motion.div>
@@ -157,7 +162,7 @@ const About: React.FC = () => {
           viewport={{ once: true }}
         >
           <motion.h3
-            className="text-3xl font-bold text-white mb-8"
+            className="text-3xl font-bold text-gray-800 mb-8"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -176,7 +181,7 @@ const About: React.FC = () => {
               (value, idx) => (
                 <motion.span
                   key={idx}
-                  className="bg-gray-800/80 text-white px-6 py-3 rounded-lg shadow-md text-sm font-medium hover:scale-105 hover:bg-indigo-600 transition-all"
+                  className="bg-white/90 backdrop-blur-sm text-gray-800 px-6 py-3 rounded-lg shadow-md text-sm font-medium hover:scale-105 hover:bg-emerald-500 hover:text-white border-2 border-emerald-200 transition-all"
                   variants={itemVariants}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -206,7 +211,7 @@ const About: React.FC = () => {
           ].map((skill, idx) => (
             <motion.span
               key={idx}
-              className="bg-indigo-600/20 text-indigo-300 border border-indigo-500/40 px-5 py-2 rounded-full text-sm font-medium shadow-sm hover:bg-indigo-600/30 transition-all"
+              className="bg-emerald-100 text-emerald-700 border-2 border-emerald-300 px-5 py-2 rounded-full text-sm font-medium shadow-sm hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition-all"
               variants={itemVariants}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
