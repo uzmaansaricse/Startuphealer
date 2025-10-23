@@ -151,7 +151,7 @@ const Hero: React.FC = () => {
         viewport={{ once: true }}
       >
         <motion.a
-          href="/contact"
+          href="/register"
           className="inline-block bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-10 py-4 rounded-full font-bold shadow-lg hover:shadow-xl hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 text-lg"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}

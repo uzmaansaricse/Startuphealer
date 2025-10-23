@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { store } from './store';
+
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import AnimatedBackground from './components/AnimatedBackground';
@@ -17,10 +16,12 @@ import RegisterPage from './pages/Register';
 // import AdminPanel from './pages/AdminPanel';
 import ProtectedRoute from './components/ProtectedRoute';
 import './index.css';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 function App() {
   return (
-    <Provider store={store}>
+  
       <Router>
         <div className="App relative bg-gray-900 min-h-screen">
           {/* <AnimatedBackground /> */}
@@ -33,8 +34,8 @@ function App() {
               <Route path="/testimonials" element={<TestimonialsPage />} />
               <Route path="/faq" element={<FAQPage />} />
               <Route path="/contact" element={<ContactPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
               {/* <Route 
                 path="/user-panel" 
                 element={
@@ -56,7 +57,7 @@ function App() {
           </div>
         </div>
       </Router>
-    </Provider>
+    
   );
 }
 

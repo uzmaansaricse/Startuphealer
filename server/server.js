@@ -1,31 +1,61 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const connectDB = require('./config/db');
+// Importing necessary modules and packages using ES6 syntax
+import express from "express";
+import userRoutes from "./routes/user.js";
+import profileRoutes from "./routes/profile.js";
+import database from "./config/database.js";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import { cloudinaryConnect } from "./config/cloudinary.js";
+import fileUpload from "express-fileupload";
+import dotenv from "dotenv";
 
+// Loading environment variables from .env file
+dotenv.config();
+
+// Creating express app
 const app = express();
 
+// Setting up port number
+const PORT = process.env.PORT || 4000;
+
+// Connecting to database
+database.connect();
+
 // Middlewares
-app.use(cors({
-	origin: process.env.CLIENT_ORIGIN || 'http://localhost:3000',
-	credentials: true,
-}));
 app.use(express.json());
+app.use(cookieParser());
+app.use(
+    cors({
+        origin: "*",
+        credentials: true,
+    })
+);
+app.use(
+    fileUpload({
+        useTempFiles: true,
+        tempFileDir: "/tmp/",
+    })
+);
 
-// Database
-connectDB();
+// Connecting to cloudinary
+cloudinaryConnect();
 
-// Routes
-app.use('/api/auth', require('./routes/auth'));
+// Setting up routes
+app.use("/api/v1/auth", userRoutes);
+app.use("/api/v1/profile", profileRoutes);
 
-// Health check
-app.get('/health', (req, res) => {
-	res.json({ status: 'ok' });
+
+// Testing the server
+app.get("/", (req, res) => {
+    return res.json({
+        success: true,
+        message: "Your server is up and running ...",
+    });
 });
 
-const PORT = process.env.PORT || 5000;
+// Listening to the server
 app.listen(PORT, () => {
-	console.log(`Server running on port ${PORT}`);
+    console.log(`App is listening at ${PORT}`);
 });
 
-
+// End of code.

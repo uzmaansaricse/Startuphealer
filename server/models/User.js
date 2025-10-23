@@ -1,15 +1,53 @@
-const mongoose = require('mongoose');
+// Import the Mongoose library using ES6 module syntax
+import mongoose from "mongoose";
 
+// Define the user schema using the Mongoose Schema constructor
 const userSchema = new mongoose.Schema(
-	{
-		name: { type: String, required: true, trim: true },
-		email: { type: String, required: true, unique: true, lowercase: true, index: true },
-		passwordHash: { type: String, required: true },
-		role: { type: String, enum: ['user', 'admin'], default: 'user' },
-	},
-	{ timestamps: true }
+  {
+    // Define the name field with type String, required, and trimmed
+    firstName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    // Define the email field with type String, required, and trimmed
+    email: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    // Define the password field with type String and required
+    password: {
+      type: String,
+      required: true,
+    },
+   
+    
+    additionalDetails: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Profile",
+    },
+    token: {
+      type: String,
+    },
+    resetPasswordExpires: {
+      type: Date,
+    },
+    image: {
+      type: String,
+    },
+
+    // Add timestamps for when the document is created and last modified
+  },
+  { timestamps: true }
 );
 
-module.exports = mongoose.model('User', userSchema);
-
-
+// Export the Mongoose model for the user schema, using the name "user"
+export default mongoose.model("user", userSchema);
