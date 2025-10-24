@@ -1,15 +1,15 @@
-// src/pages/Register.tsx
+// src/pages/Register.jsx
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { apiConnector } from '../../../client/src/services/apiConnector';
-import { endpoints } from '../../../client/src/services/api';
+import { apiConnector } from '../services/apiConnector';
+import { endpoints } from '../services/api';
 import { toast } from 'react-hot-toast';
 import bgimage from '../assets/StartupHealer.png';
 
-const Register: React.FC = () => {
+const Register = () => {
   const navigate = useNavigate();
-  const [currentStep, setCurrentStep] = useState<'register' | 'otp'>('register');
+  const [currentStep, setCurrentStep] = useState('register');
   const [loading, setLoading] = useState(false);
   
   const [formData, setFormData] = useState({
@@ -21,9 +21,9 @@ const Register: React.FC = () => {
     contactNumber: '',
   });
 
-  const [otp, setOtp] = useState<string[]>(['', '', '', '', '', '']);
+  const [otp, setOtp] = useState(['', '', '', '', '', '']);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -31,7 +31,7 @@ const Register: React.FC = () => {
     }));
   };
 
-  const validateForm = (): boolean => {
+  const validateForm = () => {
     const { firstName, lastName, email, password, confirmPassword, contactNumber } = formData;
 
     if (!firstName.trim() || !lastName.trim()) {
@@ -62,7 +62,7 @@ const Register: React.FC = () => {
     return true;
   };
 
-  const handleSendOTP = async (e: React.FormEvent) => {
+  const handleSendOTP = async (e) => {
     e.preventDefault();
 
     if (!validateForm()) return;
@@ -77,35 +77,34 @@ const Register: React.FC = () => {
         toast.success('OTP sent to your email!');
         setCurrentStep('otp');
       }
-    } catch (error: any) {
+    } catch (error) {
       toast.error(error?.response?.data?.message || 'Failed to send OTP');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleOTPChange = (index: number, value: string) => {
+  const handleOTPChange = (index, value) => {
     if (!/^\d*$/.test(value)) return;
 
     const newOtp = [...otp];
     newOtp[index] = value.slice(-1);
     setOtp(newOtp);
 
-    // Auto-focus next input
     if (value && index < 5) {
       const nextInput = document.getElementById(`otp-${index + 1}`);
       nextInput?.focus();
     }
   };
 
-  const handleOTPKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleOTPKeyDown = (index, e) => {
     if (e.key === 'Backspace' && !otp[index] && index > 0) {
       const prevInput = document.getElementById(`otp-${index - 1}`);
       prevInput?.focus();
     }
   };
 
-  const handleOTPPaste = (e: React.ClipboardEvent) => {
+  const handleOTPPaste = (e) => {
     e.preventDefault();
     const pastedData = e.clipboardData.getData('text').slice(0, 6);
     
@@ -120,7 +119,7 @@ const Register: React.FC = () => {
     nextInput?.focus();
   };
 
-  const handleVerifyOTP = async (e: React.FormEvent) => {
+  const handleVerifyOTP = async (e) => {
     e.preventDefault();
 
     const otpCode = otp.join('');
@@ -140,7 +139,7 @@ const Register: React.FC = () => {
         toast.success('Registration successful!');
         navigate('/login');
       }
-    } catch (error: any) {
+    } catch (error) {
       toast.error(error?.response?.data?.message || 'Registration failed');
     } finally {
       setLoading(false);
@@ -160,7 +159,7 @@ const Register: React.FC = () => {
         const firstInput = document.getElementById('otp-0');
         firstInput?.focus();
       }
-    } catch (error: any) {
+    } catch (error) {
       toast.error(error?.response?.data?.message || 'Failed to resend OTP');
     } finally {
       setLoading(false);
@@ -175,10 +174,8 @@ const Register: React.FC = () => {
         backgroundColor: '#E8F5F3'
       }}
     >
-      {/* Overlay for better readability */}
       <div className="absolute inset-0 bg-white/30 backdrop-blur-[2px]" />
 
-      {/* Logo */}
       <motion.div
         className="absolute top-8 right-8 z-20"
         initial={{ opacity: 0, x: 50 }}
@@ -190,7 +187,6 @@ const Register: React.FC = () => {
         </div>
       </motion.div>
 
-      {/* Form Container */}
       <motion.div
         className="relative z-10 w-full max-w-lg px-6"
         initial={{ opacity: 0, y: 50 }}
@@ -207,7 +203,6 @@ const Register: React.FC = () => {
               transition={{ duration: 0.5 }}
               className="text-center"
             >
-              {/* Header */}
               <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -240,9 +235,7 @@ const Register: React.FC = () => {
                 </div>
               </motion.div>
 
-              {/* Registration Form */}
               <form onSubmit={handleSendOTP} className="space-y-4">
-                {/* Username/First Name */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -259,7 +252,6 @@ const Register: React.FC = () => {
                   />
                 </motion.div>
 
-                {/* Last Name */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -276,7 +268,6 @@ const Register: React.FC = () => {
                   />
                 </motion.div>
 
-                {/* Email */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -293,7 +284,6 @@ const Register: React.FC = () => {
                   />
                 </motion.div>
 
-                {/* Contact Number */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -311,7 +301,6 @@ const Register: React.FC = () => {
                   />
                 </motion.div>
 
-                {/* Password Fields Row */}
                 <div className="grid grid-cols-2 gap-4">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -337,7 +326,7 @@ const Register: React.FC = () => {
                     <input
                       type="password"
                       name="confirmPassword"
-                      placeholder="New Password"
+                      placeholder="Confirm Password"
                       value={formData.confirmPassword}
                       onChange={handleInputChange}
                       required
@@ -346,7 +335,6 @@ const Register: React.FC = () => {
                   </motion.div>
                 </div>
 
-                {/* Submit Button */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -374,7 +362,6 @@ const Register: React.FC = () => {
                 </motion.div>
               </form>
 
-              {/* Sign In Link */}
               <motion.p
                 className="mt-6 text-gray-800 font-medium"
                 initial={{ opacity: 0 }}
@@ -396,7 +383,6 @@ const Register: React.FC = () => {
               transition={{ duration: 0.5 }}
               className="text-center"
             >
-              {/* Back Button */}
               <motion.button
                 onClick={() => setCurrentStep('register')}
                 className="absolute -top-20 left-0 px-8 py-3 bg-white/90 backdrop-blur-sm border-2 border-teal-400 rounded-2xl text-teal-700 font-bold hover:bg-teal-50 transition-all shadow-lg"
@@ -406,7 +392,6 @@ const Register: React.FC = () => {
                 BACK
               </motion.button>
 
-              {/* Header */}
               <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -430,9 +415,7 @@ const Register: React.FC = () => {
                 </p>
               </motion.div>
 
-              {/* OTP Form */}
               <form onSubmit={handleVerifyOTP} className="space-y-6">
-                {/* OTP Input Boxes - 6 digits */}
                 <motion.div
                   className="flex justify-center gap-3"
                   initial={{ opacity: 0, scale: 0.8 }}
@@ -458,7 +441,6 @@ const Register: React.FC = () => {
                   ))}
                 </motion.div>
 
-                {/* Resend OTP */}
                 <motion.p
                   className="text-gray-800 font-medium"
                   initial={{ opacity: 0 }}
@@ -476,7 +458,6 @@ const Register: React.FC = () => {
                   </button>
                 </motion.p>
 
-                {/* Verify Button */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}

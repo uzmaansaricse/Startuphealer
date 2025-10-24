@@ -1,9 +1,9 @@
-// src/components/Navbar.tsx
+// src/components/Navbar.jsx
 import React from 'react';
-import { NAV_ITEMS } from '../../../client/src/utils/constants';
+import { NAV_ITEMS } from '../utils/constants';
 import { Link } from 'react-router-dom';
 
-const Navbar: React.FC = () => {
+const Navbar = () => {
   return (
     <nav className="w-full fixed top-0 left-0 bg-white/95 backdrop-blur-md shadow-md z-50 border-b border-emerald-100">
       <div className="max-w-7xl mx-auto px-4 flex justify-between items-center h-16">

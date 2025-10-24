@@ -1,16 +1,16 @@
-// src/pages/FAQ.tsx
+// src/pages/FAQ.jsx
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FAQ_DATA } from '../../../client/src/utils/constants';
+import { FAQ_DATA } from '../utils/constants';
 import { FaSearch, FaQuestionCircle, FaCheckCircle, FaPhoneAlt, FaEnvelope } from 'react-icons/fa';
 import bgimage from '../assets/StartupHealer.png';
 
-const FAQ: React.FC = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+const FAQ = () => {
+  const [openIndex, setOpenIndex] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
 
-  const toggleFAQ = (index: number) => {
+  const toggleFAQ = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 

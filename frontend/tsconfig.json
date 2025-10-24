@@ -18,5 +18,5 @@
     "baseUrl": "src",
     "typeRoots": ["./node_modules/@types", "./src/types"]
   },
-  "include": ["src"]
+  "include": ["src", "../client/src/reducer", "../client/src/slices", "../client/src/services", "../client/src/store.js", "../client/reportWebVitals.js", "../client/src/utils"]
 }

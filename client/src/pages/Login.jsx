@@ -1,17 +1,17 @@
-// src/pages/Login.tsx
+// src/pages/Login.jsx
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaGoogle } from 'react-icons/fa';
 import { FaLinkedin } from 'react-icons/fa';
-import { apiConnector } from '../../../client/src/services/apiConnector';
-import { endpoints } from '../../../client/src/services/api';
+import { apiConnector } from '../services/apiConnector';
+import { endpoints } from '../services/api';
 import { toast } from 'react-hot-toast';
 import bgimage from '../assets/StartupHealer.png';
 import { useDispatch } from 'react-redux';
-import { setToken } from 'slices/authSlice';
+import { setToken } from '../slices/authSlice';
 
-const Login: React.FC = () => {
+const Login = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
@@ -22,7 +22,7 @@ const Login: React.FC = () => {
     password: '',
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -30,7 +30,7 @@ const Login: React.FC = () => {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!formData.email || !formData.password) {
@@ -45,14 +45,12 @@ const Login: React.FC = () => {
 
       if (response.data.success) {
         toast.success('Login successful!');
-        // Store token if remember me is checked
         if (rememberMe) {
           dispatch(setToken(response.data.token))
-          
         }
         navigate('/');
       }
-    } catch (error: any) {
+    } catch (error) {
       toast.error(error?.response?.data?.message || 'Login failed');
     } finally {
       setLoading(false);
@@ -61,12 +59,10 @@ const Login: React.FC = () => {
 
   const handleGoogleLogin = () => {
     toast.error('Google login coming soon!');
-    // Implement Google OAuth here
   };
 
   const handleLinkedInLogin = () => {
     toast.error('LinkedIn login coming soon!');
-    // Implement LinkedIn OAuth here
   };
 
   return (
@@ -77,10 +73,8 @@ const Login: React.FC = () => {
         backgroundColor: '#E8F5F3'
       }}
     >
-      {/* Overlay */}
       <div className="absolute inset-0 bg-white/30 backdrop-blur-[2px]" />
 
-      {/* Logo */}
       <motion.div
         className="absolute top-8 right-8 z-20"
         initial={{ opacity: 0, x: 50 }}
@@ -93,14 +87,12 @@ const Login: React.FC = () => {
       </motion.div>
 
       <div className="relative z-10 w-full max-w-6xl px-6 flex items-center justify-between gap-8">
-        {/* Left Side - Login Form */}
         <motion.div
           className="w-full max-w-lg"
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
         >
-          {/* Header */}
           <motion.div
             className="mb-8"
             initial={{ opacity: 0, y: -20 }}
@@ -132,9 +124,7 @@ const Login: React.FC = () => {
             </h2>
           </motion.div>
 
-          {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Email/Username */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -151,7 +141,6 @@ const Login: React.FC = () => {
               />
             </motion.div>
 
-            {/* Password */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -168,7 +157,6 @@ const Login: React.FC = () => {
               />
             </motion.div>
 
-            {/* Remember Me & Forgot Password */}
             <motion.div
               className="flex items-center justify-between"
               initial={{ opacity: 0 }}
@@ -197,7 +185,6 @@ const Login: React.FC = () => {
               </Link>
             </motion.div>
 
-            {/* Login Button */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -225,7 +212,6 @@ const Login: React.FC = () => {
             </motion.div>
           </form>
 
-          {/* Create Account Link */}
           <motion.p
             className="mt-6 text-gray-800 font-medium text-center"
             initial={{ opacity: 0 }}
@@ -239,14 +225,12 @@ const Login: React.FC = () => {
           </motion.p>
         </motion.div>
 
-        {/* Right Side - Social Login Options */}
         <motion.div
           className="hidden lg:flex flex-col items-center justify-center space-y-6"
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          {/* Vertical Line with OR */}
           <div className="relative flex flex-col items-center">
             <div className="h-32 w-0.5 bg-gradient-to-b from-transparent via-teal-400 to-transparent"></div>
             <motion.div
@@ -259,9 +243,7 @@ const Login: React.FC = () => {
             <div className="h-32 w-0.5 bg-gradient-to-b from-transparent via-teal-400 to-transparent"></div>
           </div>
 
-          {/* Social Login Buttons */}
           <div className="flex flex-col gap-4 w-80">
-            {/* Google Login */}
             <motion.button
               onClick={handleGoogleLogin}
               className="flex items-center gap-4 px-6 py-4 bg-white hover:bg-blue-50 rounded-2xl shadow-lg border-2 border-blue-100 hover:border-blue-300 transition-all group"
@@ -279,7 +261,6 @@ const Login: React.FC = () => {
               </span>
             </motion.button>
 
-            {/* LinkedIn Login */}
             <motion.button
               onClick={handleLinkedInLogin}
               className="flex items-center gap-4 px-6 py-4 bg-white hover:bg-blue-50 rounded-2xl shadow-lg border-2 border-blue-100 hover:border-blue-400 transition-all group"
@@ -299,7 +280,6 @@ const Login: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Mobile Social Login - Below Form */}
         <motion.div
           className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t-2 border-teal-200 p-4 space-y-3"
           initial={{ opacity: 0, y: 50 }}
@@ -310,7 +290,6 @@ const Login: React.FC = () => {
             <span className="text-gray-600 font-semibold">OR</span>
           </div>
           
-          {/* Google */}
           <button
             onClick={handleGoogleLogin}
             className="flex items-center justify-center gap-3 w-full px-4 py-3 bg-white hover:bg-blue-50 rounded-xl shadow-md border-2 border-blue-100 transition-all"
@@ -319,7 +298,6 @@ const Login: React.FC = () => {
             <span className="text-gray-700 font-semibold">Continue with Google</span>
           </button>
 
-          {/* LinkedIn */}
           <button
             onClick={handleLinkedInLogin}
             className="flex items-center justify-center gap-3 w-full px-4 py-3 bg-white hover:bg-blue-50 rounded-xl shadow-md border-2 border-blue-100 transition-all"
