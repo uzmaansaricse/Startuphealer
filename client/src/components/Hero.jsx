@@ -2,25 +2,30 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
+
 const Hero = () => {
   const [incorp, setIncorp] = useState(0);
   const [trusted, setTrusted] = useState(0);
   const [stars, setStars] = useState(0);
   const [loop, setLoop] = useState(0);
 
+
   useEffect(() => {
     const incorpTarget = 80;
     const trustedTarget = 500;
     const starsTarget = 95;
+
 
     let incorpInterval;
     let trustedInterval;
     let starsInterval;
     let resetTimeout;
 
+
     setIncorp(0);
     setTrusted(0);
     setStars(0);
+
 
     incorpInterval = setInterval(() => {
       setIncorp((prev) => {
@@ -30,6 +35,7 @@ const Hero = () => {
       });
     }, 15);
 
+
     trustedInterval = setInterval(() => {
       setTrusted((prev) => {
         if (prev < trustedTarget) return prev + 10;
@@ -37,6 +43,7 @@ const Hero = () => {
         return trustedTarget;
       });
     }, 10);
+
 
     starsInterval = setInterval(() => {
       setStars((prev) => {
@@ -46,7 +53,9 @@ const Hero = () => {
       });
     }, 15);
 
+
     resetTimeout = setTimeout(() => setLoop((l) => l + 1), 3000);
+
 
     return () => {
       clearInterval(incorpInterval);
@@ -55,6 +64,7 @@ const Hero = () => {
       clearTimeout(resetTimeout);
     };
   }, [loop]);
+
 
   return (
     <motion.section
@@ -75,12 +85,13 @@ const Hero = () => {
       >
         <h1 className="text-4xl md:text-6xl font-extrabold text-gray-800 mb-4 leading-tight">
           We Don't Just Consult —{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-emerald-600 to-green-600">
             We Care
           </span>
         </h1>
-        <div className="w-32 h-1.5 bg-gradient-to-r from-emerald-500 to-teal-500 mx-auto rounded-full shadow-md"></div>
+        <div className="w-32 h-1.5 bg-gradient-to-r from-cyan-500 via-emerald-500 to-green-500 mx-auto rounded-full shadow-md"></div>
       </motion.div>
+
 
       {/* Subheading */}
       <motion.p
@@ -91,10 +102,11 @@ const Hero = () => {
         viewport={{ once: true }}
       >
         Your Growth Partner for{' '}
-        <span className="text-emerald-600 font-bold">Compliance</span>,{' '}
+        <span className="text-cyan-600 font-bold">Compliance</span>,{' '}
         <span className="text-emerald-600 font-bold">Funding</span>, and{' '}
-        <span className="text-emerald-600 font-bold">Scale</span>
+        <span className="text-green-600 font-bold">Scale</span>
       </motion.p>
+
 
       {/* Description */}
       <motion.p
@@ -104,12 +116,13 @@ const Hero = () => {
         transition={{ duration: 0.8, delay: 0.4 }}
         viewport={{ once: true }}
       >
-        We bring <span className="font-semibold text-emerald-600">clarity</span>,{' '}
+        We bring <span className="font-semibold text-cyan-600">clarity</span>,{' '}
         <span className="font-semibold text-emerald-600">confidence</span>, and{' '}
-        <span className="font-semibold text-emerald-600">practical direction</span> to early-stage startups — 
+        <span className="font-semibold text-green-600">practical direction</span> to early-stage startups — 
         helping you overcome challenges that slow you down, so you can focus on what truly matters:{' '}
-        <span className="font-bold text-emerald-600">building impact</span>.
+        <span className="font-bold bg-gradient-to-r from-cyan-600 to-emerald-600 bg-clip-text text-transparent">building impact</span>.
       </motion.p>
+
 
       {/* KPI Cards */}
       <motion.div
@@ -120,16 +133,16 @@ const Hero = () => {
         viewport={{ once: true }}
       >
         {[
-          { value: `${incorp}%`, label: 'Faster Compliance Process', desc: 'Save time with our streamlined approach' },
-          { value: `${trusted}+`, label: 'Startups Supported', desc: 'Trusted by founders across India' },
-          { value: `${stars}%`, label: 'Client Success Rate', desc: 'Results that speak for themselves' },
+          { value: `${incorp}%`, label: 'Faster Compliance Process', desc: 'Save time with our streamlined approach', gradient: 'from-cyan-600 to-teal-600' },
+          { value: `${trusted}+`, label: 'Startups Supported', desc: 'Trusted by founders across India', gradient: 'from-teal-600 to-emerald-600' },
+          { value: `${stars}%`, label: 'Client Success Rate', desc: 'Results that speak for themselves', gradient: 'from-emerald-600 to-green-600' },
         ].map((k) => (
           <motion.div
             key={k.label}
-            className="flex flex-col items-center p-6 rounded-2xl shadow-xl bg-white/95 backdrop-blur-md border-2 border-emerald-200 hover:border-emerald-400 hover:shadow-2xl transition-all duration-300 group"
+            className="flex flex-col items-center p-6 rounded-2xl shadow-xl bg-white/95 backdrop-blur-md border-2 border-cyan-200 hover:border-cyan-400 hover:shadow-2xl transition-all duration-300 group"
             whileHover={{ y: -5 }}
           >
-            <span className="kpi-3d text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600 leading-tight mb-2">
+            <span className={`kpi-3d text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r ${k.gradient} leading-tight mb-2`}>
               {k.value}
             </span>
             <span className="text-sm md:text-base text-gray-800 font-bold mb-1">
@@ -142,6 +155,7 @@ const Hero = () => {
         ))}
       </motion.div>
 
+
       {/* CTA Buttons */}
       <motion.div
         className="flex flex-col sm:flex-row gap-4"
@@ -152,7 +166,7 @@ const Hero = () => {
       >
         <motion.a
           href="/register"
-          className="inline-block bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-10 py-4 rounded-full font-bold shadow-lg hover:shadow-xl hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 text-lg"
+          className="inline-block bg-gradient-to-r from-cyan-500 via-emerald-500 to-green-500 text-white px-10 py-4 rounded-full font-bold shadow-lg hover:shadow-xl hover:from-cyan-600 hover:via-emerald-600 hover:to-green-600 transition-all duration-300 text-lg"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
@@ -160,13 +174,14 @@ const Hero = () => {
         </motion.a>
         <motion.a
           href="/services"
-          className="inline-block bg-white text-emerald-600 border-2 border-emerald-500 px-10 py-4 rounded-full font-bold shadow-lg hover:bg-emerald-50 hover:shadow-xl transition-all duration-300 text-lg"
+          className="inline-block bg-white text-cyan-600 border-2 border-cyan-500 px-10 py-4 rounded-full font-bold shadow-lg hover:bg-cyan-50 hover:shadow-xl transition-all duration-300 text-lg"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
           Explore Services
         </motion.a>
       </motion.div>
+
 
       {/* Trust Badges */}
       <motion.div
@@ -177,11 +192,11 @@ const Hero = () => {
         viewport={{ once: true }}
       >
         <div className="flex items-center gap-2">
-          <span className="text-emerald-600 text-2xl">✓</span>
+          <span className="text-cyan-600 text-2xl">✓</span>
           <span>No Hidden Costs</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-emerald-600 text-2xl">✓</span>
+          <span className="text-teal-600 text-2xl">✓</span>
           <span>Transparent Process</span>
         </div>
         <div className="flex items-center gap-2">
@@ -189,10 +204,11 @@ const Hero = () => {
           <span>Expert Guidance</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-emerald-600 text-2xl">✓</span>
+          <span className="text-green-600 text-2xl">✓</span>
           <span>24/7 Support</span>
         </div>
       </motion.div>
+
 
       <style>{`
         .kpi-3d {
@@ -206,5 +222,6 @@ const Hero = () => {
     </motion.section>
   );
 };
+
 
 export default Hero;

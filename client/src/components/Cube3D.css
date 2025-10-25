@@ -1,7 +1,8 @@
 /* src/components/Cube3D.css */
 .cube3d-container {
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 4rem 2rem;
   perspective: 1200px;
 }
@@ -23,36 +24,79 @@
   justify-content: center;
   font-size: 16px;
   font-weight: 600;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
-  border: 2px solid rgba(16, 185, 129, 0.3);
-  color: #047857;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 253, 250, 0.9) 100%);
+  backdrop-filter: blur(12px);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  text-shadow: 0 1px 3px rgba(6, 182, 212, 0.2);
+  box-shadow: 
+    0 8px 24px rgba(6, 182, 212, 0.15),
+    0 4px 8px rgba(16, 185, 129, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
 }
 
-.front  {
+/* Face content layout */
+.face-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.face-icon {
+  font-size: 32px;
+  transition: transform 0.3s ease;
+}
+
+.face-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0e7490;
+  text-align: center;
+}
+
+/* Individual face color variations using cyan-green gradient */
+.front {
   transform: rotateY(0deg) translateZ(100px);
+  border-image: linear-gradient(135deg, rgba(6, 182, 212, 0.4), rgba(16, 185, 129, 0.4)) 1;
 }
 
-.back   {
+.back {
   transform: rotateY(180deg) translateZ(100px);
+  border-image: linear-gradient(135deg, rgba(16, 185, 129, 0.4), rgba(34, 197, 94, 0.4)) 1;
 }
 
-.right  {
+.right {
   transform: rotateY(90deg) translateZ(100px);
+  border-image: linear-gradient(135deg, rgba(6, 182, 212, 0.4), rgba(20, 184, 166, 0.4)) 1;
 }
 
-.left   {
+.left {
   transform: rotateY(-90deg) translateZ(100px);
+  border-image: linear-gradient(135deg, rgba(20, 184, 166, 0.4), rgba(16, 185, 129, 0.4)) 1;
 }
 
-.top    {
+.top {
   transform: rotateX(90deg) translateZ(100px);
+  border-image: linear-gradient(135deg, rgba(6, 182, 212, 0.5), rgba(34, 197, 94, 0.3)) 1;
 }
 
 .bottom {
   transform: rotateX(-90deg) translateZ(100px);
+  border-image: linear-gradient(135deg, rgba(34, 197, 94, 0.4), rgba(6, 182, 212, 0.4)) 1;
+}
+
+/* Hover effect for interactivity */
+.cube3d:hover .face {
+  box-shadow: 
+    0 12px 32px rgba(6, 182, 212, 0.25),
+    0 6px 12px rgba(16, 185, 129, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.cube3d:hover .face-icon {
+  transform: scale(1.1);
 }
 
 @keyframes rotateCube {
@@ -62,4 +106,42 @@
   to {
     transform: rotateX(360deg) rotateY(360deg);
   }
+}
+
+/* Pause rotation on hover for better readability */
+.cube3d:hover {
+  animation-play-state: paused;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .cube3d-container {
+    padding: 2rem 1rem;
+  }
+  
+  .cube3d {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .face {
+    width: 150px;
+    height: 150px;
+    font-size: 12px;
+  }
+  
+  .face-icon {
+    font-size: 24px;
+  }
+  
+  .face-text {
+    font-size: 12px;
+  }
+  
+  .front  { transform: rotateY(0deg) translateZ(75px); }
+  .back   { transform: rotateY(180deg) translateZ(75px); }
+  .right  { transform: rotateY(90deg) translateZ(75px); }
+  .left   { transform: rotateY(-90deg) translateZ(75px); }
+  .top    { transform: rotateX(90deg) translateZ(75px); }
+  .bottom { transform: rotateX(-90deg) translateZ(75px); }
 }

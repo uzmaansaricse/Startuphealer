@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { FaHeart, FaRocket, FaHandshake, FaShieldAlt, FaBullseye, FaGlobe } from "react-icons/fa";
 import bgimage from "../assets/StartupHealer.png";
 
+
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -14,6 +15,7 @@ const containerVariants = {
     },
   },
 };
+
 
 const itemVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -26,6 +28,7 @@ const itemVariants = {
   },
 };
 
+
 const About = () => {
   return (
     <motion.section
@@ -37,7 +40,8 @@ const About = () => {
       transition={{ duration: 0.8 }}
       viewport={{ once: true }}
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-white/50 via-emerald-50/60 to-white/70 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-white/50 via-cyan-50/40 to-emerald-50/50 pointer-events-none" />
+
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <motion.div
@@ -48,28 +52,30 @@ const About = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-4xl md:text-5xl font-extrabold mb-6 text-gray-800">
-            About <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600">StartupHealer</span>
+            About <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-emerald-600 to-green-600">StartupHealer</span>
           </h2>
-          <div className="w-24 h-1.5 bg-gradient-to-r from-emerald-500 to-teal-500 mx-auto rounded-full shadow-md mb-8"></div>
+          <div className="w-24 h-1.5 bg-gradient-to-r from-cyan-500 via-emerald-500 to-green-500 mx-auto rounded-full shadow-md mb-8"></div>
+
 
           <motion.div
-            className="bg-white/95 backdrop-blur-md p-8 md:p-10 rounded-2xl shadow-xl border-2 border-emerald-200 max-w-4xl mx-auto"
+            className="bg-white/95 backdrop-blur-md p-8 md:p-10 rounded-2xl shadow-xl border-2 border-cyan-200 max-w-4xl mx-auto"
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             viewport={{ once: true }}
           >
             <p className="text-gray-700 text-lg leading-relaxed mb-6">
-              At <span className="font-bold text-emerald-600">StartupHealer</span>, we don't just consult — <span className="font-semibold text-emerald-600">we care</span>.
+              At <span className="font-bold bg-gradient-to-r from-cyan-600 to-emerald-600 bg-clip-text text-transparent">StartupHealer</span>, we don't just consult — <span className="font-semibold text-cyan-600">we care</span>.
             </p>
             <p className="text-gray-600 leading-relaxed">
-              We understand that every founder's journey is filled with uncertainty, excitement, and constant problem-solving. That's why we exist — to bring <span className="font-semibold text-emerald-600">clarity</span>, <span className="font-semibold text-emerald-600">confidence</span>, and <span className="font-semibold text-emerald-600">practical direction</span> to early-stage startups.
+              We understand that every founder's journey is filled with uncertainty, excitement, and constant problem-solving. That's why we exist — to bring <span className="font-semibold text-cyan-600">clarity</span>, <span className="font-semibold text-emerald-600">confidence</span>, and <span className="font-semibold text-green-600">practical direction</span> to early-stage startups.
             </p>
             <p className="text-gray-600 leading-relaxed mt-4">
-              We're not a service aggregator or a paperwork portal. We're a <span className="font-semibold text-emerald-600">growth partner</span> that listens, understands your story, and builds tailored strategies that actually move your business forward.
+              We're not a service aggregator or a paperwork portal. We're a <span className="font-semibold bg-gradient-to-r from-cyan-600 to-emerald-600 bg-clip-text text-transparent">growth partner</span> that listens, understands your story, and builds tailored strategies that actually move your business forward.
             </p>
           </motion.div>
         </motion.div>
+
 
         <motion.div
           className="grid md:grid-cols-2 gap-10 mb-20"
@@ -92,10 +98,10 @@ const About = () => {
           ].map((item, idx) => (
             <motion.div key={idx} variants={itemVariants}>
               <Tilt options={{ max: 12, scale: 1.03, speed: 800 }}>
-                <div className="bg-white/95 backdrop-blur-md p-8 rounded-2xl shadow-xl border-2 border-emerald-200 hover:border-emerald-400 hover:shadow-2xl transition-all duration-300 h-full">
+                <div className="bg-white/95 backdrop-blur-md p-8 rounded-2xl shadow-xl border-2 border-cyan-200 hover:border-cyan-400 hover:shadow-2xl transition-all duration-300 h-full">
                   <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-full flex items-center justify-center mr-4">
-                      <item.icon className="text-emerald-600 text-2xl" />
+                    <div className="w-12 h-12 bg-gradient-to-br from-cyan-100 via-emerald-100 to-green-100 rounded-full flex items-center justify-center mr-4">
+                      <item.icon className="text-cyan-600 text-2xl" />
                     </div>
                     <h3 className="text-2xl font-bold text-gray-800">{item.title}</h3>
                   </div>
@@ -105,6 +111,7 @@ const About = () => {
             </motion.div>
           ))}
         </motion.div>
+
 
         <motion.div
           className="mb-20"
@@ -156,7 +163,7 @@ const About = () => {
               },
             ].map((item, idx) => (
               <motion.div key={idx} variants={itemVariants}>
-                <div className="bg-white/90 backdrop-blur-md p-6 rounded-xl shadow-lg hover:shadow-2xl border-2 border-emerald-200 hover:border-emerald-400 transition-all duration-300 h-full">
+                <div className="bg-white/90 backdrop-blur-md p-6 rounded-xl shadow-lg hover:shadow-2xl border-2 border-cyan-200 hover:border-emerald-400 transition-all duration-300 h-full">
                   <h4 className="text-lg font-bold text-gray-800 mb-3">{item.title}</h4>
                   <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
                 </div>
@@ -170,12 +177,13 @@ const About = () => {
             transition={{ duration: 0.8, delay: 0.6 }}
             viewport={{ once: true }}
           >
-            Every service we offer is designed to help founders build <span className="font-semibold text-emerald-600">smarter</span>, <span className="font-semibold text-emerald-600">faster</span>, and <span className="font-semibold text-emerald-600">stronger</span> — without losing focus on what truly matters: <span className="font-bold text-emerald-600">impact</span>.
+            Every service we offer is designed to help founders build <span className="font-semibold text-cyan-600">smarter</span>, <span className="font-semibold text-emerald-600">faster</span>, and <span className="font-semibold text-green-600">stronger</span> — without losing focus on what truly matters: <span className="font-bold bg-gradient-to-r from-cyan-600 to-emerald-600 bg-clip-text text-transparent">impact</span>.
           </motion.p>
         </motion.div>
       </div>
     </motion.section>
   );
 };
+
 
 export default About;
