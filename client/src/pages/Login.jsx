@@ -51,10 +51,8 @@ const Login = () => {
 
       if (response.data.success) {
         toast.success('Login successful!');
-        if (rememberMe) {
-          dispatch(setToken(response.data.token))
-        }
-        navigate('/');
+         dispatch(setToken(response.data.token))
+        navigate('/profile');
       }
     } catch (error) {
       toast.error(error?.response?.data?.message || 'Login failed');

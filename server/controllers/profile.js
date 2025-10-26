@@ -12,10 +12,21 @@ export const updateProfile = async (req, res) => {
     const {
       firstName = "",
       lastName = "",
-      dateOfBirth = "",
-      about = "",
-      contactNumber = "",
-      gender = "",
+    
+		
+	role,
+	coFounderExist,
+	coFoundersFirstName ,
+	coFoundersLastName ,
+  	startUpName,
+	state,
+	city,
+	address,
+	industry,
+	sector,
+	businessDescription,
+      contactNumber ,
+     
     } = req.body;
     const id = req.user.id;
 
@@ -30,10 +41,19 @@ export const updateProfile = async (req, res) => {
     await user.save();
 
     // Update the profile fields
-    profile.dateOfBirth = dateOfBirth;
-    profile.about = about;
+   profile.role=role,
+	profile.coFounderExist=coFounderExist,
+	profile.coFoundersFirstName=coFoundersFirstName ,
+	profile.coFoundersLastName=coFoundersLastName  ,
+  	profile.startUpName=startUpName,
+	profile.state=state,
+	profile.city = city,
+	profile.address =address,
+	profile.industry=industry,
+	profile.sector=sector,
+	profile.businessDescription=businessDescription,
     profile.contactNumber = contactNumber;
-    profile.gender = gender;
+    
 
     // Save the updated profile
     await profile.save();

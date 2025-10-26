@@ -1,5 +1,7 @@
 const BASE_URL = "http://localhost:4000/api/v1"
+
 // const BASE_URL = "https://startup-healer-backend.onrender.com/api/v1"
+
 // AUTH ENDPOINTS
 export const endpoints = {
   SENDOTP_API: BASE_URL + "/auth/sendotp",
@@ -12,5 +14,6 @@ export const endpoints = {
 // PROFILE ENDPOINTS
 export const profileEndpoints = {
   GET_USER_DETAILS_API: BASE_URL + "/profile/getUserDetails",
- 
+  UPDATE_PROFILE : BASE_URL + "/profile/updateProfile", 
+  UPDATE_PROFILE_PICTURE : BASE_URL + "/profile/updateDisplayPicture", 
 }
