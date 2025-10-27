@@ -124,7 +124,7 @@ const Contact = () => {
             {/* Map */}
             <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-lg overflow-hidden border-2 border-cyan-200">
               <iframe
-                title="Startup Healer Location"
+                title="StartupHealer Location"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3569.097791317973!2d75.76316007446336!3d26.81967916467788!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db63cb0e25a29%3A0x8a5a8b5e6f27e0a3!2sRadha%20Kunj%2C%20Mansarovar%2C%20Jaipur%2C%20Rajasthan%20302020!5e0!3m2!1sen!2sin!4v1693830945643!5m2!1sen!2sin"
                 width="100%"
                 height="300"

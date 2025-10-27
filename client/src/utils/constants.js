@@ -25,28 +25,73 @@ export const SERVICES = [
 export const TESTIMONIALS = [
   {
     id: 1,
-    name: "Sarah Johnson",
-    role: "CEO, TechStart Inc.",
-    content: "The team delivered an exceptional website that perfectly captures our brand vision. The 3D effects and smooth animations really set us apart from competitors.",
+    name: "Vandana",
+    role: "DS Arogya Wellness Center",
+    content: "StartupHealer made our MSME and incubation approval journey effortless. With their expert guidance, DS Arogya Wellness Center successfully received MSME Hackathon 5.0 incubation approval. Truly grateful for their support and professionalism!",
     avatar: "👩‍💼",
     rating: 5
   },
   {
     id: 2,
-    name: "Michael Chen",
-    role: "Founder, InnovateLab",
-    content: "Outstanding work! The mobile app they developed exceeded our expectations. The user experience is intuitive and the performance is excellent.",
+    name: "Nitin",
+    role: "Director, Nijivsha Surgical Export International Pvt. Ltd.",
+    content: "StartupHealer provided exceptional support in helping us achieve our ISO 9001, CE, and GMP certifications. Their expertise, attention to detail, and smooth coordination made the entire process fast and stress-free. Thanks to their guidance, our company is now fully compliant and ready to expand into new international markets.",
     avatar: "👨‍💻",
     rating: 5
   },
   {
      id: 3,
-    name: "Vikram Singh",
-    role: "CEO, FinEdge Solutions",
+    name: " Nihirika",
+    role: "Brownmarc Global Pvt. Ltd.",
        avatar: "👨‍💻",
     content:
-      "Amazing experience! From GST registration to branding, everything was smooth and handled with great expertise.",
-    rating: 5,  }
+      "StartupHealer made our SIC and iStart Rajasthan application process simple and hassle-free. Highly professional and supportive team!",
+    rating: 5,  },
+     {
+     id: 4,
+    name: " Yuvraj",
+    role: "Vrajhna Fashions Pvt. Ltd.",
+       avatar: "👨‍💻",
+    content:
+      "StartupHealer has been an incredible support partner for our SIC and iStart Rajasthan applications. Their team guided us with clarity, handled all documentation smoothly, and ensured a completely stress-free process. Their professionalism and commitment make them the perfect partner for every growing startup.",
+    rating: 5,  
+  },
+  {
+     id: 5,
+    name: " Sarath",
+    role: "Director, Sparro Property Management Services Pvt. Ltd.",
+       avatar: "👨‍💻",
+    content:
+      "StartupHealer made our SIC and MSME registration process incredibly smooth. Their team was always available to clarify doubts and ensured every document was handled correctly and on time. Thanks to their support, our company achieved both registrations effortlessly. A reliable partner for every growing business.",
+    rating: 5,  
+  },
+  {
+     id: 6,
+    name: " Vijay",
+    role: "Sahjanand Colour Yarn and Fab Pvt. Ltd.",
+       avatar: "👨‍💻",
+    content:
+      "StartupHealer made our SIC registration quick, simple, and hassle-free. Excellent support and professional service throughout",
+    rating: 5,  
+  },
+  {
+     id: 7,
+    name: "Amit Jindal",
+    role: "Director, ACCENDOS Web Technologies Pvt. Ltd.",
+       avatar: "👨‍💻",
+    content:
+      "The StartupHealer team made our Startup India registration process incredibly smooth. Their clear communication and hands-on support ensured our certification was completed without any hassle. I truly appreciate their professionalism and commitment to helping startups grow the right way.",
+    rating: 5,  
+  },
+  {
+     id: 8,
+    name: "Kamal,",
+    role: "Agrio India Pvt.Ltd.",
+       avatar: "👨‍💻",
+    content:
+      "Working with the team was an outstanding experience! From SIC registration to MSME and StartupIndia applications, and even the MSME Hackathon 5.0, every step was handled professionally. The guidance, support, and timely updates made the entire process smooth and hassle-free. Highly recommended!",
+    rating: 5,  
+  },
 ];
 
 export const FAQ_DATA = [
@@ -75,6 +120,14 @@ export const FAQ_DATA = [
 ];
 
 export const NAV_ITEMS = [
+  { name: "Home", href: "/" },
+  
+  { name: "Services", href: "/services" },
+  
+  { name: "Contact", href: "/contact" }
+];
+
+export const SIDEBAR_ITEMS = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
   { name: "Services", href: "/services" },

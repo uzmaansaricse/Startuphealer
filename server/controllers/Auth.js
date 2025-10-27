@@ -83,10 +83,19 @@ export const signup = async (req, res) => {
 
     // Create the Additional Profile For User
     const profileDetails = await Profile.create({
-      gender: null,
-      dateOfBirth: null,
-      about: null,
-      contactNumber: null,
+     contactNumber: null,
+	role : null,
+	coFounderExist:null,
+	coFoundersFirstName : null,
+	coFoundersLastName : null,
+	startUpName : null,
+	state: null,
+	city: null,
+	address: null,
+	industry: null,
+	sector: null,
+	businessDescription: null,
+	image:null
     });
 
     const user = await User.create({

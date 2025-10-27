@@ -48,7 +48,7 @@ const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [profileExists, setProfileExists] = useState(false);
 
-  const token = useSelector(state=>state.auth.token)
+  const token = useSelector(state => state.auth.token);
 
   const [userData, setUserData] = useState({
     firstName: '',
@@ -80,12 +80,12 @@ const Profile = () => {
   const fetchUserData = async () => {
     try {
       setLoading(true);
-      const response = await apiConnector('GET', profileEndpoints.GET_USER_DETAILS_API,null,{
-        Authorization : `Bearer ${token}`
+      const response = await apiConnector('GET', profileEndpoints.GET_USER_DETAILS_API, null, {
+        Authorization: `Bearer ${token}`
       });
 
-      console.log(response)
-      
+      console.log(response);
+
       if (response.data.success) {
         const user = response.data.data;
         setUserData({
@@ -112,8 +112,8 @@ const Profile = () => {
             contactNumber: profile.contactNumber || '',
           });
 
-          // Check if profile is complete
-          if (profile.role && profile.startUpName) {
+          // Check if profile exists (even minimal data)
+          if (profile.role || profile.startUpName || profile.industry) {
             setProfileExists(true);
             setCurrentStep(5); // Go to profile view
           }
@@ -133,8 +133,10 @@ const Profile = () => {
       const response = await apiConnector('PUT', profileEndpoints.UPDATE_PROFILE, {
         ...userData,
         ...profileData,
-      },{
-        Authorization : `Bearer ${token}`
+        // Set default role if none selected
+        role: profileData.role || 'Not Specified'
+      }, {
+        Authorization: `Bearer ${token}`
       });
 
       if (response.data.success) {
@@ -151,25 +153,39 @@ const Profile = () => {
     }
   };
 
-  const handleNext = () => {
-    // Validation for each step
-    if (currentStep === 0 && !profileData.role) {
-      toast.error('Please select your role');
-      return;
-    }
-    if (currentStep === 1 && profileData.coFounderExist && (!profileData.coFoundersFirstName || !profileData.coFoundersLastName)) {
-      toast.error('Please enter co-founder details');
-      return;
-    }
-    if (currentStep === 2 && (!profileData.industry || !profileData.sector || !profileData.businessDescription)) {
-      toast.error('Please fill all business information');
-      return;
-    }
-    if (currentStep === 3 && (!profileData.startUpName || !profileData.state || !profileData.city || !profileData.address)) {
-      toast.error('Please fill all location details');
-      return;
-    }
+  // Handle skip all - saves minimal data and goes to profile view
+  const handleSkipAll = async () => {
+    try {
+      setLoading(true);
 
+      console.log("userdata => ",userData)
+      console.log("profiledata => ",profileData)
+
+      // Save whatever data is available (even if minimal)
+      const response = await apiConnector('PUT', profileEndpoints.UPDATE_PROFILE, {
+        ...userData,
+        ...profileData,
+        // Set default role if none selected
+        role: profileData.role || 'Not Specified'
+      }, {
+        Authorization: `Bearer ${token}`
+      });
+
+      if (response.data.success) {
+        toast.success('Profile saved! You can complete it later.');
+        setProfileExists(true);
+        setCurrentStep(5);
+        fetchUserData();
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message || 'Failed to save profile');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleNext = () => {
+    // No strict validation - user can proceed
     if (currentStep === 4) {
       handleUpdateProfile();
     } else {
@@ -203,16 +219,16 @@ const Profile = () => {
       {/* Logo */}
       <div className="absolute top-8 right-8 z-20">
         <div className="text-2xl font-bold bg-gradient-to-r from-cyan-600 to-emerald-600 bg-clip-text text-transparent bg-white/90 px-4 py-2 rounded-lg shadow-lg">
-          STARTUP HEALER
+          StartupHealer
         </div>
       </div>
 
       <div className="relative z-10 min-h-screen flex items-center justify-center px-6 py-20">
         <AnimatePresence mode="wait">
-          {currentStep === 0 && <Step1RoleSelection key="step1" profileData={profileData} setProfileData={setProfileData} handleNext={handleNext} handleBack={handleBack} />}
-          {currentStep === 1 && <Step2CoFounder key="step2" profileData={profileData} setProfileData={setProfileData} handleNext={handleNext} handleBack={handleBack} />}
-          {currentStep === 2 && <Step3BusinessInfo key="step3" profileData={profileData} setProfileData={setProfileData} handleNext={handleNext} handleBack={handleBack} />}
-          {currentStep === 3 && <Step4Location key="step4" profileData={profileData} setProfileData={setProfileData} handleNext={handleNext} handleBack={handleBack} INDIAN_STATES={INDIAN_STATES} />}
+          {currentStep === 0 && <Step1RoleSelection key="step1" profileData={profileData} setProfileData={setProfileData} handleNext={handleNext} handleBack={handleBack} handleSkipAll={handleSkipAll} />}
+          {currentStep === 1 && <Step2CoFounder key="step2" profileData={profileData} setProfileData={setProfileData} handleNext={handleNext} handleBack={handleBack} handleSkipAll={handleSkipAll} />}
+          {currentStep === 2 && <Step3BusinessInfo key="step3" profileData={profileData} setProfileData={setProfileData} handleNext={handleNext} handleBack={handleBack} handleSkipAll={handleSkipAll} />}
+          {currentStep === 3 && <Step4Location key="step4" profileData={profileData} setProfileData={setProfileData} handleNext={handleNext} handleBack={handleBack} INDIAN_STATES={INDIAN_STATES} handleSkipAll={handleSkipAll} />}
           {currentStep === 4 && <Step5ProfilePicture key="step5" userData={userData} setUserData={setUserData} handleNext={handleNext} handleBack={handleBack} />}
           {currentStep === 5 && <ProfileView key="profile" userData={userData} profileData={profileData} setCurrentStep={setCurrentStep} setIsEditing={setIsEditing} />}
         </AnimatePresence>
@@ -221,8 +237,8 @@ const Profile = () => {
   );
 };
 
-// Step 1: Role Selection
-const Step1RoleSelection = ({ profileData, setProfileData, handleNext, handleBack }) => {
+// Step 1: Role Selection (WITH skip button)
+const Step1RoleSelection = ({ profileData, setProfileData, handleNext, handleBack, handleSkipAll }) => {
   const handleRoleSelect = (displayRole) => {
     const roleValue = ROLE_MAPPING[displayRole];
     setProfileData({ ...profileData, role: roleValue });
@@ -246,7 +262,7 @@ const Step1RoleSelection = ({ profileData, setProfileData, handleNext, handleBac
         {ROLES.map((displayRole) => {
           const roleValue = ROLE_MAPPING[displayRole];
           const isSelected = profileData.role === roleValue;
-          
+
           return (
             <motion.button
               key={displayRole}
@@ -274,7 +290,16 @@ const Step1RoleSelection = ({ profileData, setProfileData, handleNext, handleBac
         })}
       </div>
 
-      <div className="flex justify-end mt-8">
+      {/* Buttons with Skip option */}
+      <div className="flex justify-between items-center mt-8">
+        <motion.button
+          onClick={handleSkipAll}
+          className="px-6 py-3 bg-white border-2 border-gray-300 text-gray-600 font-semibold rounded-full hover:bg-gray-50 transition-all"
+          whileHover={{ scale: 1.05 }}
+        >
+          Skip for now
+        </motion.button>
+
         <motion.button
           onClick={handleNext}
           className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-bold rounded-full shadow-lg hover:from-cyan-600 hover:to-emerald-600 transition-all"
@@ -288,8 +313,8 @@ const Step1RoleSelection = ({ profileData, setProfileData, handleNext, handleBac
   );
 };
 
-// Step 2: Co-Founder
-const Step2CoFounder = ({ profileData, setProfileData, handleNext, handleBack }) => (
+// Step 2: Co-Founder (WITH skip button)
+const Step2CoFounder = ({ profileData, setProfileData, handleNext, handleBack, handleSkipAll }) => (
   <motion.div
     className="w-full max-w-2xl bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl p-8 border-2 border-cyan-200"
     initial={{ opacity: 0, x: 100 }}
@@ -342,7 +367,7 @@ const Step2CoFounder = ({ profileData, setProfileData, handleNext, handleBack })
       </div>
     )}
 
-    <div className="flex justify-between">
+    <div className="flex justify-between items-center">
       <motion.button
         onClick={handleBack}
         className="px-8 py-3 bg-white border-2 border-cyan-500 text-cyan-600 font-bold rounded-full hover:bg-cyan-50 transition-all"
@@ -350,19 +375,30 @@ const Step2CoFounder = ({ profileData, setProfileData, handleNext, handleBack })
       >
         ← Back
       </motion.button>
-      <motion.button
-        onClick={handleNext}
-        className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-bold rounded-full hover:from-cyan-600 hover:to-emerald-600 transition-all"
-        whileHover={{ scale: 1.05 }}
-      >
-        Next →
-      </motion.button>
+
+      <div className="flex gap-3">
+        <motion.button
+          onClick={handleSkipAll}
+          className="px-6 py-3 bg-white border-2 border-gray-300 text-gray-600 font-semibold rounded-full hover:bg-gray-50 transition-all"
+          whileHover={{ scale: 1.05 }}
+        >
+          Skip for now
+        </motion.button>
+
+        <motion.button
+          onClick={handleNext}
+          className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-bold rounded-full hover:from-cyan-600 hover:to-emerald-600 transition-all"
+          whileHover={{ scale: 1.05 }}
+        >
+          Next →
+        </motion.button>
+      </div>
     </div>
   </motion.div>
 );
 
-// Step 3: Business Info
-const Step3BusinessInfo = ({ profileData, setProfileData, handleNext, handleBack }) => (
+// Step 3: Business Info (WITH skip button)
+const Step3BusinessInfo = ({ profileData, setProfileData, handleNext, handleBack, handleSkipAll }) => (
   <motion.div
     className="w-full max-w-2xl bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl p-8 border-2 border-cyan-200"
     initial={{ opacity: 0, x: 100 }}
@@ -406,7 +442,7 @@ const Step3BusinessInfo = ({ profileData, setProfileData, handleNext, handleBack
       </div>
     </div>
 
-    <div className="flex justify-between mt-8">
+    <div className="flex justify-between items-center mt-8">
       <motion.button
         onClick={handleBack}
         className="px-8 py-3 bg-white border-2 border-cyan-500 text-cyan-600 font-bold rounded-full hover:bg-cyan-50 transition-all"
@@ -414,19 +450,30 @@ const Step3BusinessInfo = ({ profileData, setProfileData, handleNext, handleBack
       >
         ← Back
       </motion.button>
-      <motion.button
-        onClick={handleNext}
-        className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-bold rounded-full hover:from-cyan-600 hover:to-emerald-600 transition-all"
-        whileHover={{ scale: 1.05 }}
-      >
-        Next →
-      </motion.button>
+
+      <div className="flex gap-3">
+        <motion.button
+          onClick={handleSkipAll}
+          className="px-6 py-3 bg-white border-2 border-gray-300 text-gray-600 font-semibold rounded-full hover:bg-gray-50 transition-all"
+          whileHover={{ scale: 1.05 }}
+        >
+          Skip for now
+        </motion.button>
+
+        <motion.button
+          onClick={handleNext}
+          className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-bold rounded-full hover:from-cyan-600 hover:to-emerald-600 transition-all"
+          whileHover={{ scale: 1.05 }}
+        >
+          Next →
+        </motion.button>
+      </div>
     </div>
   </motion.div>
 );
 
-// Step 4: Location
-const Step4Location = ({ profileData, setProfileData, handleNext, handleBack, INDIAN_STATES }) => (
+// Step 4: Location (WITH skip button)
+const Step4Location = ({ profileData, setProfileData, handleNext, handleBack, INDIAN_STATES, handleSkipAll }) => (
   <motion.div
     className="w-full max-w-2xl bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl p-8 border-2 border-cyan-200"
     initial={{ opacity: 0, x: 100 }}
@@ -481,7 +528,7 @@ const Step4Location = ({ profileData, setProfileData, handleNext, handleBack, IN
       </div>
     </div>
 
-    <div className="flex justify-between mt-8">
+    <div className="flex justify-between items-center mt-8">
       <motion.button
         onClick={handleBack}
         className="px-8 py-3 bg-white border-2 border-cyan-500 text-cyan-600 font-bold rounded-full hover:bg-cyan-50 transition-all"
@@ -489,17 +536,27 @@ const Step4Location = ({ profileData, setProfileData, handleNext, handleBack, IN
       >
         ← Back
       </motion.button>
-      <motion.button
-        onClick={handleNext}
-        className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-bold rounded-full hover:from-cyan-600 hover:to-emerald-600 transition-all"
-        whileHover={{ scale: 1.05 }}
-      >
-        Next →
-      </motion.button>
+
+      <div className="flex gap-3">
+        <motion.button
+          onClick={handleSkipAll}
+          className="px-6 py-3 bg-white border-2 border-gray-300 text-gray-600 font-semibold rounded-full hover:bg-gray-50 transition-all"
+          whileHover={{ scale: 1.05 }}
+        >
+          Skip for now
+        </motion.button>
+
+        <motion.button
+          onClick={handleNext}
+          className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-bold rounded-full hover:from-cyan-600 hover:to-emerald-600 transition-all"
+          whileHover={{ scale: 1.05 }}
+        >
+          Next →
+        </motion.button>
+      </div>
     </div>
   </motion.div>
 );
-
 
 // Step 5: Profile Picture
 const Step5ProfilePicture = ({ userData, setUserData, handleNext, handleBack }) => {
@@ -513,16 +570,16 @@ const Step5ProfilePicture = ({ userData, setUserData, handleNext, handleBack }) 
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      
+
       reader.onload = (event) => {
         const img = new Image();
         img.src = event.target.result;
-        
+
         img.onload = () => {
           const canvas = document.createElement('canvas');
           let width = img.width;
           let height = img.height;
-          
+
           // Calculate new dimensions (max 1920x1920)
           const maxDimension = 1920;
           if (width > height && width > maxDimension) {
@@ -532,13 +589,13 @@ const Step5ProfilePicture = ({ userData, setUserData, handleNext, handleBack }) 
             width = (width * maxDimension) / height;
             height = maxDimension;
           }
-          
+
           canvas.width = width;
           canvas.height = height;
-          
+
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, width, height);
-          
+
           // Compress with quality adjustment
           canvas.toBlob(
             (blob) => {
@@ -555,10 +612,10 @@ const Step5ProfilePicture = ({ userData, setUserData, handleNext, handleBack }) 
             0.8 // 80% quality
           );
         };
-        
+
         img.onerror = () => reject(new Error('Failed to load image'));
       };
-      
+
       reader.onerror = () => reject(new Error('Failed to read file'));
     });
   };
@@ -582,10 +639,10 @@ const Step5ProfilePicture = ({ userData, setUserData, handleNext, handleBack }) 
         let processedFile = file;
 
         // Compress image if larger than 50KB
-        if (file.size > 50 * 1024 ) {
-          toast.success('Compressing image for faster upload...');
+        if (file.size > 50 * 1024) {
+          toast.info('Compressing image for faster upload...');
           processedFile = await compressImage(file, 2);
-          
+
           // Show compression success
           const originalSizeMB = (file.size / (1024 * 1024)).toFixed(2);
           const compressedSizeMB = (processedFile.size / (1024 * 1024)).toFixed(2);
@@ -606,7 +663,7 @@ const Step5ProfilePicture = ({ userData, setUserData, handleNext, handleBack }) 
           setUserData({ ...userData, image: reader.result });
         };
         reader.readAsDataURL(processedFile);
-        
+
       } catch (error) {
         toast.error('Failed to process image. Please try another image.');
         console.error('Image compression error:', error);
@@ -622,7 +679,7 @@ const Step5ProfilePicture = ({ userData, setUserData, handleNext, handleBack }) 
 
     try {
       setUploading(true);
-      
+
       // Create FormData to send the file
       const formData = new FormData();
       formData.append('displayPicture', selectedFile);
@@ -670,19 +727,19 @@ const Step5ProfilePicture = ({ userData, setUserData, handleNext, handleBack }) 
 
       <div className="flex justify-center mb-8">
         <label className="cursor-pointer group">
-          <input 
-            type="file" 
-            className="hidden" 
-            accept="image/*" 
+          <input
+            type="file"
+            className="hidden"
+            accept="image/*"
             onChange={handleFileChange}
             disabled={uploading}
           />
           <div className="w-48 h-48 rounded-full bg-gradient-to-br from-cyan-100 to-emerald-100 flex items-center justify-center border-4 border-cyan-300 hover:border-cyan-400 transition-all group-hover:scale-105 overflow-hidden">
             {userData.image ? (
-              <img 
-                src={userData.image} 
-                alt="Profile Preview" 
-                className="w-full h-full object-cover" 
+              <img
+                src={userData.image}
+                alt="Profile Preview"
+                className="w-full h-full object-cover"
               />
             ) : (
               <div className="text-center">
@@ -725,7 +782,7 @@ const Step5ProfilePicture = ({ userData, setUserData, handleNext, handleBack }) 
             {uploading ? (
               <span className="flex items-center justify-center gap-2">
                 <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                  <Circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidthth="4" fill="none" />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                 </svg>
                 Uploading...
@@ -765,8 +822,6 @@ const Step5ProfilePicture = ({ userData, setUserData, handleNext, handleBack }) 
   );
 };
 
-
-
 // Profile View
 const ProfileView = ({ userData, profileData, setCurrentStep, setIsEditing }) => (
   <motion.div
@@ -803,11 +858,11 @@ const ProfileView = ({ userData, profileData, setCurrentStep, setIsEditing }) =>
         <div>
           <h3 className="text-3xl font-bold text-gray-800">{userData.firstName} {userData.lastName}</h3>
           <p className="text-lg text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-emerald-600 font-semibold mb-1">
-            {profileData.role}
+            {profileData.role || 'Not Specified'}
           </p>
           <p className="text-lg text-gray-600">{userData.email}</p>
-          <p className="text-lg text-gray-600">{profileData.contactNumber}</p>
-          <p className="text-lg text-gray-600">{profileData.city}, {profileData.state}</p>
+          {profileData.contactNumber && <p className="text-lg text-gray-600">{profileData.contactNumber}</p>}
+          {profileData.city && profileData.state && <p className="text-lg text-gray-600">{profileData.city}, {profileData.state}</p>}
         </div>
       </div>
 
@@ -819,7 +874,7 @@ const ProfileView = ({ userData, profileData, setCurrentStep, setIsEditing }) =>
 
           <h4 className="text-xl font-bold text-gray-800 mb-2">Co-founder Name</h4>
           <p className="text-gray-600 mb-4">
-            {profileData.coFounderExist 
+            {profileData.coFounderExist
               ? `${profileData.coFoundersFirstName} ${profileData.coFoundersLastName}`
               : 'No co-founder'}
           </p>

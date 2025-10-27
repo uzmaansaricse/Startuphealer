@@ -1,10 +1,21 @@
 // src/components/Navbar.jsx
-import React, { useState } from 'react';
-import { NAV_ITEMS } from '../utils/constants';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { NAV_ITEMS, SIDEBAR_ITEMS } from '../utils/constants';
+import { Link, useNavigate } from 'react-router-dom';
+import { FaUser, FaSignOutAlt, FaSignInAlt } from 'react-icons/fa';
+import { toast } from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSignupData, setToken } from '../slices/authSlice';
 
 const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+   const token = useSelector(state => state.auth.token)
+
+   const dispatch = useDispatch();
+
+
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -14,6 +25,31 @@ const Navbar = () => {
     setIsSidebarOpen(false);
   };
 
+  const handleLogout = () => {
+    dispatch(setToken(null));
+    dispatch(setSignupData(null))
+    localStorage.removeItem('token');
+    localStorage.clear();
+    setIsLoggedIn(false);
+    toast.success('Logged out successfully!');
+    navigate('/');
+    closeSidebar();
+  };
+
+  const handleLogin = () => {
+    navigate('/login');
+    closeSidebar();
+  };
+
+  const handleProfile = () => {
+    navigate('/profile');
+    closeSidebar();
+  };
+  // Check if user is logged in
+  useEffect(() => {
+    
+    setIsLoggedIn(!!token);
+  }, [token]);
   return (
     <>
       <nav className="w-full fixed top-0 left-0 bg-white/95 backdrop-blur-md shadow-md z-50 border-b border-cyan-100">
@@ -45,17 +81,17 @@ const Navbar = () => {
             {/* Logo */}
             <img
               src="/st_logo.jpeg"
-              alt="Startup Healer Logo"
+              alt="StartupHealer Logo"
               className="h-12 w-auto mr-3"
             />
             {/* Brand name */}
             <span className="font-bold text-2xl bg-gradient-to-r from-cyan-600 via-emerald-600 to-green-600 bg-clip-text text-transparent">
-              Startup Healer
+              StartupHealer
             </span>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="space-x-6 hidden md:flex">
+          <div className="space-x-6 hidden md:flex items-center">
             {NAV_ITEMS.map((item) => (
               <Link
                 key={item.name}
@@ -65,6 +101,34 @@ const Navbar = () => {
                 {item.name}
               </Link>
             ))}
+
+            {/* Desktop Auth Buttons */}
+            {isLoggedIn ? (
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={handleProfile}
+                  className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-semibold rounded-full hover:from-cyan-600 hover:to-emerald-600 transition-all shadow-md hover:shadow-lg"
+                >
+                  <FaUser className="text-sm" />
+                  Profile
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center gap-2 px-4 py-2 bg-white border-2 border-cyan-500 text-cyan-600 font-semibold rounded-full hover:bg-cyan-50 transition-all shadow-md"
+                >
+                  <FaSignOutAlt className="text-sm" />
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={handleLogin}
+                className="flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-cyan-500 via-emerald-500 to-green-500 text-white font-semibold rounded-full hover:from-cyan-600 hover:via-emerald-600 hover:to-green-600 transition-all shadow-md hover:shadow-lg"
+              >
+                <FaSignInAlt className="text-sm" />
+                Login
+              </button>
+            )}
           </div>
         </div>
       </nav>
@@ -111,7 +175,7 @@ const Navbar = () => {
 
         {/* Sidebar Navigation */}
         <nav className="flex flex-col p-4 space-y-2">
-          {NAV_ITEMS.map((item) => (
+          {SIDEBAR_ITEMS.map((item) => (
             <Link
               key={item.name}
               to={item.href}
@@ -121,6 +185,36 @@ const Navbar = () => {
               {item.name}
             </Link>
           ))}
+
+          {/* Sidebar Auth Buttons */}
+          <div className="pt-4 border-t border-cyan-200 mt-4 space-y-2">
+            {isLoggedIn ? (
+              <>
+                <button
+                  onClick={handleProfile}
+                  className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-semibold rounded-lg hover:from-cyan-600 hover:to-emerald-600 transition-all shadow-md"
+                >
+                  <FaUser />
+                  View Profile
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-white border-2 border-cyan-500 text-cyan-600 font-semibold rounded-lg hover:bg-cyan-50 transition-all"
+                >
+                  <FaSignOutAlt />
+                  Logout
+                </button>
+              </>
+            ) : (
+              <button
+                onClick={handleLogin}
+                className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-gradient-to-r from-cyan-500 via-emerald-500 to-green-500 text-white font-semibold rounded-lg hover:from-cyan-600 hover:via-emerald-600 hover:to-green-600 transition-all shadow-md"
+              >
+                <FaSignInAlt />
+                Login
+              </button>
+            )}
+          </div>
         </nav>
       </div>
     </>

@@ -88,7 +88,7 @@ const About = () => {
             {
               icon: FaBullseye,
               title: "🌟 Our Mission",
-              desc: "To heal the startup ecosystem by helping founders overcome challenges that slow them down — whether it's funding confusion, compliance complexity, unclear positioning, or lack of strategic focus. We want to make building a startup feel less overwhelming — and far more achievable.",
+              desc: "To heal the startup ecosystem by helping founders overcome challenges that slow them down — whether it's funding confusion, compliance complexity, or lack of strategic focus. ",
             },
             {
               icon: FaGlobe,

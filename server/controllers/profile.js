@@ -39,6 +39,7 @@ export const updateProfile = async (req, res) => {
       lastName,
     });
     await user.save();
+    console.log(role)
 
     // Update the profile fields
    profile.role=role,
