@@ -15,14 +15,15 @@ import {
 } from "react-icons/fa";
 import React from "react";
 import { motion } from "framer-motion";
-import bgimage from '../assets/StartupHealer.png';
-
+import bgimage from "../assets/StartupHealer.png";
 
 const services = [
   {
     title: "Startup India Certificate",
-    description: "Get recognized under the Startup India scheme with complete registration support.",
-    detailedDesc: "Unlock exclusive benefits including tax exemptions, faster patent approvals, and access to government tenders. We handle the entire certification process from eligibility assessment to final approval.",
+    description:
+      "Get recognized under the Startup India scheme with complete registration support.",
+    detailedDesc:
+      "Unlock exclusive benefits including tax exemptions, faster patent approvals, and access to government tenders. We handle the entire certification process from eligibility assessment to final approval.",
     icon: FaCertificate,
     features: [
       "Eligibility assessment & consultation",
@@ -31,7 +32,11 @@ const services = [
       "Government liaison & follow-up",
       "Certificate delivery & activation",
     ],
-    benefits: ["Tax exemptions for 3 years", "IPR fast-track", "Access to government schemes"],
+    benefits: [
+      "Tax exemptions for 3 years",
+      "IPR fast-track",
+      "Access to government schemes",
+    ],
     timeline: "7-14 business days",
     price: "Starting from ₹5,000",
     color: "from-cyan-50 to-teal-50",
@@ -39,8 +44,10 @@ const services = [
   },
   {
     title: "MSME Certificate",
-    description: "Register your business under MSME and avail government benefits.",
-    detailedDesc: "Get your Udyam Registration Certificate and unlock benefits like collateral-free loans, subsidy schemes, and priority sector lending.",
+    description:
+      "Register your business under MSME and avail government benefits.",
+    detailedDesc:
+      "Get your Udyam Registration Certificate and unlock benefits like collateral-free loans, subsidy schemes, and priority sector lending.",
     icon: FaBuilding,
     features: [
       "Udyam registration portal setup",
@@ -49,7 +56,11 @@ const services = [
       "Annual compliance support",
       "Certificate issuance",
     ],
-    benefits: ["Easy bank loans", "Government subsidies", "Lower interest rates"],
+    benefits: [
+      "Easy bank loans",
+      "Government subsidies",
+      "Lower interest rates",
+    ],
     timeline: "3-5 business days",
     price: "Starting from ₹1,000",
     color: "from-teal-50 to-emerald-50",
@@ -58,7 +69,8 @@ const services = [
   {
     title: "GST Registration",
     description: "Complete GST registration and compliance assistance.",
-    detailedDesc: "Simplify your GST journey with end-to-end registration, filing support, and compliance management. Stay penalty-free with our expert guidance.",
+    detailedDesc:
+      "Simplify your GST journey with end-to-end registration, filing support, and compliance management. Stay penalty-free with our expert guidance.",
     icon: FaFileInvoice,
     features: [
       "GST number registration",
@@ -76,7 +88,8 @@ const services = [
   {
     title: "ISO 9001:2015 Certification",
     description: "International quality certification for your organization.",
-    detailedDesc: "Enhance credibility, improve processes, and access global markets with ISO certification. We provide complete documentation and audit support.",
+    detailedDesc:
+      "Enhance credibility, improve processes, and access global markets with ISO certification. We provide complete documentation and audit support.",
     icon: FaAward,
     features: [
       "Gap analysis & consultation",
@@ -94,7 +107,8 @@ const services = [
   {
     title: "Trademark & Company Registration",
     description: "Protect your brand and register your business legally.",
-    detailedDesc: "Safeguard your brand identity and establish legal business entity. From trademark search to company incorporation, we handle everything.",
+    detailedDesc:
+      "Safeguard your brand identity and establish legal business entity. From trademark search to company incorporation, we handle everything.",
     icon: FaTrademark,
     features: [
       "Comprehensive trademark search",
@@ -112,7 +126,8 @@ const services = [
   {
     title: "Funding & Investment Support",
     description: "Support in finding investors and funding opportunities.",
-    detailedDesc: "From pitch deck creation to investor introductions and term sheet negotiations - we guide you through the entire fundraising journey.",
+    detailedDesc:
+      "From pitch deck creation to investor introductions and term sheet negotiations - we guide you through the entire fundraising journey.",
     icon: FaHandHoldingUsd,
     features: [
       "Professional pitch deck design",
@@ -121,7 +136,11 @@ const services = [
       "Pitch practice & refinement",
       "Term sheet negotiation support",
     ],
-    benefits: ["Investor connections", "Better valuations", "Strategic guidance"],
+    benefits: [
+      "Investor connections",
+      "Better valuations",
+      "Strategic guidance",
+    ],
     timeline: "Ongoing support",
     price: "Custom packages from ₹25,000",
     color: "from-teal-50 to-cyan-50",
@@ -130,7 +149,8 @@ const services = [
   {
     title: "Web Design & Development",
     description: "Modern, responsive, and conversion-focused websites.",
-    detailedDesc: "Build a stunning online presence that converts visitors into customers. Custom designs, SEO optimization, and mobile-first approach included.",
+    detailedDesc:
+      "Build a stunning online presence that converts visitors into customers. Custom designs, SEO optimization, and mobile-first approach included.",
     icon: FaGlobe,
     features: [
       "Custom UI/UX design",
@@ -148,7 +168,8 @@ const services = [
   {
     title: "Digital Marketing",
     description: "Data-driven strategies to grow your online presence.",
-    detailedDesc: "Reach your target audience effectively with SEO, social media, and performance marketing. We focus on ROI, not vanity metrics.",
+    detailedDesc:
+      "Reach your target audience effectively with SEO, social media, and performance marketing. We focus on ROI, not vanity metrics.",
     icon: FaBullhorn,
     features: [
       "SEO & keyword strategy",
@@ -165,7 +186,6 @@ const services = [
   },
 ];
 
-
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -175,7 +195,6 @@ const containerVariants = {
     },
   },
 };
-
 
 const itemVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -187,7 +206,6 @@ const itemVariants = {
     },
   },
 };
-
 
 export default function Services() {
   return (
@@ -202,7 +220,6 @@ export default function Services() {
       {/* Light overlay with blue-green gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-white/50 via-cyan-50/40 to-emerald-50/50 pointer-events-none" />
 
-
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading */}
         <motion.div
@@ -213,11 +230,15 @@ export default function Services() {
           viewport={{ once: true }}
         >
           <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4">
-            Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-emerald-600 to-green-600">Services</span>
+            Our{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-emerald-600 to-green-600">
+              Services
+            </span>
           </h2>
           <div className="w-24 h-1.5 bg-gradient-to-r from-cyan-500 via-emerald-500 to-green-500 mx-auto rounded-full shadow-md mb-6"></div>
           <p className="text-gray-700 text-base md:text-lg max-w-3xl mx-auto leading-relaxed mb-4">
-            Comprehensive solutions designed to help startups grow smarter, faster, and stronger — from compliance to scale.
+            Comprehensive solutions designed to help startups grow smarter,
+            faster, and stronger — from compliance to scale.
           </p>
           <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-600">
             <div className="flex items-center gap-2">
@@ -238,7 +259,6 @@ export default function Services() {
             </div>
           </div>
         </motion.div>
-
 
         {/* Services Grid */}
         <motion.div
@@ -262,33 +282,31 @@ export default function Services() {
             >
               {/* Decorative corner accent */}
               <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-cyan-100/50 to-transparent rounded-bl-full" />
-              
+
               {/* Icon */}
-              <div className={`relative flex items-center justify-center w-16 h-16 rounded-2xl bg-white shadow-md mb-4 
-                group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
+              <div
+                className={`relative flex items-center justify-center w-16 h-16 rounded-2xl bg-white shadow-md mb-4 
+                group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}
+              >
                 {React.createElement(service.icon, {
                   className: `text-4xl ${service.iconColor}`,
                 })}
               </div>
-
 
               {/* Title */}
               <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-cyan-700 transition-colors">
                 {service.title}
               </h3>
 
-
               {/* Short Description */}
               <p className="text-gray-600 text-sm mb-3 leading-relaxed">
                 {service.description}
               </p>
 
-
               {/* Detailed Description */}
               <p className="text-gray-500 text-xs mb-4 leading-relaxed italic">
                 {service.detailedDesc}
               </p>
-
 
               {/* Timeline & Price */}
               <div className="flex justify-between items-center mb-4 text-xs">
@@ -301,23 +319,28 @@ export default function Services() {
                 </div>
               </div>
 
-
               {/* Features */}
               <ul className="space-y-2 mb-4 flex-grow">
                 {service.features.map((feature, fIdx) => (
-                  <li key={fIdx} className="flex items-start text-gray-700 text-xs">
+                  <li
+                    key={fIdx}
+                    className="flex items-start text-gray-700 text-xs"
+                  >
                     <span className="mr-2 mt-0.5 flex-shrink-0 w-4 h-4 rounded-full bg-cyan-100 flex items-center justify-center">
-                      <span className="text-cyan-600 font-bold text-[10px]">✓</span>
+                      <span className="text-cyan-600 font-bold text-[10px]">
+                        ✓
+                      </span>
                     </span>
                     <span>{feature}</span>
                   </li>
                 ))}
               </ul>
 
-
               {/* Benefits */}
               <div className="mb-4 pt-4 border-t border-cyan-100">
-                <p className="text-xs font-semibold text-gray-700 mb-2">Key Benefits:</p>
+                <p className="text-xs font-semibold text-gray-700 mb-2">
+                  Key Benefits:
+                </p>
                 <div className="flex flex-wrap gap-2">
                   {service.benefits.map((benefit, bIdx) => (
                     <span
@@ -330,11 +353,21 @@ export default function Services() {
                 </div>
               </div>
 
-
               {/* CTA Button */}
               <motion.button
+                onClick={() => {
+                  // WhatsApp link with Indian country code (+91)
+                  const phoneNumber = "919610332259"; // Add 91 for India
+                  const message = encodeURIComponent(
+                    "Hello! I want to get started with StartupHealer."
+                  );
+                  window.open(
+                    `https://wa.me/${phoneNumber}?text=${message}`,
+                    "_blank"
+                  );
+                }}
                 className="w-full py-3 px-4 bg-gradient-to-r from-cyan-500 via-emerald-500 to-green-500 text-white font-semibold rounded-lg 
-                  shadow-md hover:shadow-lg hover:from-cyan-600 hover:via-emerald-600 hover:to-green-600 transition-all duration-300"
+    shadow-md hover:shadow-lg hover:from-cyan-600 hover:via-emerald-600 hover:to-green-600 transition-all duration-300"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -343,7 +376,6 @@ export default function Services() {
             </motion.div>
           ))}
         </motion.div>
-
 
         {/* Why Choose Our Services */}
         <motion.div
@@ -358,10 +390,30 @@ export default function Services() {
           </h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: FaShieldAlt, title: "100% Secure", desc: "Your data is safe with us", color: "text-cyan-600" },
-              { icon: FaClock, title: "Fast Delivery", desc: "Quick turnaround times", color: "text-teal-600" },
-              { icon: FaCheckCircle, title: "Expert Support", desc: "Experienced professionals", color: "text-emerald-600" },
-              { icon: FaRocket, title: "Results Focused", desc: "Measurable outcomes", color: "text-green-600" },
+              {
+                icon: FaShieldAlt,
+                title: "100% Secure",
+                desc: "Your data is safe with us",
+                color: "text-cyan-600",
+              },
+              {
+                icon: FaClock,
+                title: "Fast Delivery",
+                desc: "Quick turnaround times",
+                color: "text-teal-600",
+              },
+              {
+                icon: FaCheckCircle,
+                title: "Expert Support",
+                desc: "Experienced professionals",
+                color: "text-emerald-600",
+              },
+              {
+                icon: FaRocket,
+                title: "Results Focused",
+                desc: "Measurable outcomes",
+                color: "text-green-600",
+              },
             ].map((item, idx) => (
               <div key={idx} className="text-center">
                 <div className="w-16 h-16 bg-gradient-to-br from-cyan-100 via-emerald-100 to-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
@@ -373,7 +425,6 @@ export default function Services() {
             ))}
           </div>
         </motion.div>
-
 
         {/* Bottom CTA */}
         <motion.div
@@ -387,7 +438,8 @@ export default function Services() {
             Ready to Transform Your Startup?
           </h3>
           <p className="text-cyan-50 text-lg mb-8 max-w-2xl mx-auto">
-            Choose any service or get a custom package tailored to your needs. Free consultation included!
+            Choose any service or get a custom package tailored to your needs.
+            Free consultation included!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <motion.a

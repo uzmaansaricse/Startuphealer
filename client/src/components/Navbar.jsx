@@ -11,11 +11,8 @@ const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
-   const token = useSelector(state => state.auth.token)
-
-   const dispatch = useDispatch();
-
-
+  const token = useSelector(state => state.auth.token);
+  const dispatch = useDispatch();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -27,7 +24,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     dispatch(setToken(null));
-    dispatch(setSignupData(null))
+    dispatch(setSignupData(null));
     localStorage.removeItem('token');
     localStorage.clear();
     setIsLoggedIn(false);
@@ -45,17 +42,19 @@ const Navbar = () => {
     navigate('/profile');
     closeSidebar();
   };
+
   // Check if user is logged in
   useEffect(() => {
-    
     setIsLoggedIn(!!token);
   }, [token]);
+
   return (
     <>
-      <nav className="w-full fixed top-0 left-0 bg-white/95 backdrop-blur-md shadow-md z-50 border-b border-cyan-100">
+      {/* Main Navbar - Pure White */}
+      <nav className="w-full fixed top-0 left-0 bg-white shadow-md z-50 border-b border-cyan-100">
         <div className="max-w-7xl mx-auto px-4 flex justify-between items-center h-16">
           <div className="flex items-center">
-            {/* Hamburger Menu Button - Now on LEFT */}
+            {/* Hamburger Menu Button */}
             <button
               onClick={toggleSidebar}
               className="md:hidden flex flex-col justify-center items-center w-10 h-10 space-y-1.5 focus:outline-none mr-3"
@@ -78,16 +77,17 @@ const Navbar = () => {
               ></span>
             </button>
 
-            {/* Logo */}
-            <img
-              src="/st_logo.jpeg"
-              alt="StartupHealer Logo"
-              className="h-12 w-auto mr-3"
-            />
-            {/* Brand name */}
-            <span className="font-bold text-2xl bg-gradient-to-r from-cyan-600 via-emerald-600 to-green-600 bg-clip-text text-transparent">
-              StartupHealer
-            </span>
+            {/* Logo and Brand Name */}
+            <Link to="/" className="flex items-center">
+              <img
+                src="/st_logo.jpeg"
+                alt="StartupHealer Logo"
+                className="h-12 w-auto mr-3"
+              />
+              <span className="font-bold text-2xl bg-gradient-to-r from-cyan-600 via-emerald-600 to-green-600 bg-clip-text text-transparent">
+                StartupHealer
+              </span>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
@@ -141,36 +141,50 @@ const Navbar = () => {
         ></div>
       )}
 
-      {/* Sidebar - Full opacity, slides from LEFT */}
+      {/* Sidebar */}
       <div
         className={`fixed top-0 left-0 h-full w-64 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        {/* Sidebar Header */}
-        <div className="flex justify-between items-center p-4 border-b border-cyan-200 bg-gradient-to-r from-cyan-50 to-emerald-50">
-          <span className="font-bold text-xl bg-gradient-to-r from-cyan-600 to-emerald-600 bg-clip-text text-transparent">
-            Menu
-          </span>
-          <button
-            onClick={closeSidebar}
-            className="text-gray-700 hover:text-cyan-600 focus:outline-none"
-            aria-label="Close menu"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
+        {/* Sidebar Header with Logo and Company Name */}
+        <div className="p-4 border-b-2 border-cyan-200 bg-gradient-to-r from-cyan-50 to-emerald-50">
+          <div className="flex items-center justify-between mb-3">
+            <Link to="/" onClick={closeSidebar} className="flex items-center">
+              <img
+                src="/st_logo.jpeg"
+                alt="StartupHealer Logo"
+                className="h-10 w-auto mr-2"
               />
-            </svg>
-          </button>
+              <span className="font-bold text-lg bg-gradient-to-r from-cyan-600 via-emerald-600 to-green-600 bg-clip-text text-transparent">
+                StartupHealer
+              </span>
+            </Link>
+            
+            <button
+              onClick={closeSidebar}
+              className="text-gray-700 hover:text-cyan-600 focus:outline-none transition-colors"
+              aria-label="Close menu"
+            >
+              <svg
+                className="w-6 h-6 "
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+          
+          <div className="text-xs text-gray-600 font-medium">
+            Empowering Startups
+          </div>
         </div>
 
         {/* Sidebar Navigation */}

@@ -138,7 +138,7 @@ const Team = () => (
               </div>
 
 
-              {/* Social Links */}
+              {/* Social Links
               <div className="flex gap-3 mt-auto pt-4 border-t border-cyan-100 w-full justify-center">
                 <motion.a
                   href="#"
@@ -156,7 +156,7 @@ const Team = () => (
                 >
                   <FaEnvelope className="text-lg" />
                 </motion.a>
-              </div>
+              </div> */}
             </div>
           </motion.div>
         ))}
