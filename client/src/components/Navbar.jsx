@@ -43,18 +43,17 @@ const Navbar = () => {
     closeSidebar();
   };
 
-  // Check if user is logged in
   useEffect(() => {
     setIsLoggedIn(!!token);
   }, [token]);
 
   return (
     <>
-      {/* Main Navbar - Pure White */}
+      {/* Main Navbar */}
       <nav className="w-full fixed top-0 left-0 bg-white shadow-md z-50 border-b border-cyan-100">
         <div className="max-w-7xl mx-auto px-4 flex justify-between items-center h-16">
           <div className="flex items-center">
-            {/* Hamburger Menu Button */}
+            {/* Hamburger Menu */}
             <button
               onClick={toggleSidebar}
               className="md:hidden flex flex-col justify-center items-center w-10 h-10 space-y-1.5 focus:outline-none mr-3"
@@ -77,7 +76,7 @@ const Navbar = () => {
               ></span>
             </button>
 
-            {/* Logo and Brand Name */}
+            {/* Logo */}
             <Link to="/" className="flex items-center">
               <img
                 src="/st_logo.jpeg"
@@ -121,6 +120,8 @@ const Navbar = () => {
                 </button>
               </div>
             ) : (
+            
+              /*
               <button
                 onClick={handleLogin}
                 className="flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-cyan-500 via-emerald-500 to-green-500 text-white font-semibold rounded-full hover:from-cyan-600 hover:via-emerald-600 hover:to-green-600 transition-all shadow-md hover:shadow-lg"
@@ -128,6 +129,8 @@ const Navbar = () => {
                 <FaSignInAlt className="text-sm" />
                 Login
               </button>
+              */
+              null
             )}
           </div>
         </div>
@@ -147,7 +150,7 @@ const Navbar = () => {
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        {/* Sidebar Header with Logo and Company Name */}
+        {/* Sidebar Header */}
         <div className="p-4 border-b-2 border-cyan-200 bg-gradient-to-r from-cyan-50 to-emerald-50">
           <div className="flex items-center justify-between mb-3">
             <Link to="/" onClick={closeSidebar} className="flex items-center">
@@ -160,7 +163,6 @@ const Navbar = () => {
                 StartupHealer
               </span>
             </Link>
-            
             <button
               onClick={closeSidebar}
               className="text-gray-700 hover:text-cyan-600 focus:outline-none transition-colors"
@@ -181,7 +183,6 @@ const Navbar = () => {
               </svg>
             </button>
           </div>
-          
           <div className="text-xs text-gray-600 font-medium">
             Empowering Startups
           </div>
@@ -220,6 +221,8 @@ const Navbar = () => {
                 </button>
               </>
             ) : (
+             
+              /*
               <button
                 onClick={handleLogin}
                 className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-gradient-to-r from-cyan-500 via-emerald-500 to-green-500 text-white font-semibold rounded-lg hover:from-cyan-600 hover:via-emerald-600 hover:to-green-600 transition-all shadow-md"
@@ -227,6 +230,8 @@ const Navbar = () => {
                 <FaSignInAlt />
                 Login
               </button>
+              */
+              null
             )}
           </div>
         </nav>
