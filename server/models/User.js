@@ -20,6 +20,8 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+      unique: true,
+      lowercase: true,
     },
 
     // Define the password field with type String and required
@@ -27,11 +29,14 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-   
-    
+    position: {
+      type: String,
+      enum: ['Admin', 'User'],
+      default: 'User',
+      required: true,
+    },
     additionalDetails: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
       ref: "Profile",
     },
     token: {

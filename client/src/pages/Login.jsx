@@ -46,13 +46,19 @@ const Login = () => {
     setLoading(true);
     try {
       const response = await apiConnector('POST', endpoints.LOGIN_API, formData);
-      console.log(response)
+      console.log( "login response :" ,response)
 
 
       if (response.data.success) {
         toast.success('Login successful!');
          dispatch(setToken(response.data.token))
-        navigate('/profile');
+
+         if(response.data.user.position === 'Admin'){
+            navigate('/adminpanel');
+         }else{
+          navigate('/profile')
+         }
+        
       }
     } catch (error) {
       toast.error(error?.response?.data?.message || 'Login failed');

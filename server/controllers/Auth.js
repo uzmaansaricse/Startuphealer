@@ -21,7 +21,7 @@ export const signup = async (req, res) => {
       email,
       password,
       confirmPassword,
-      
+
       contactNumber,
       otp,
     } = req.body;
@@ -79,23 +79,21 @@ export const signup = async (req, res) => {
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    
-
     // Create the Additional Profile For User
     const profileDetails = await Profile.create({
-     contactNumber: null,
-	role : null,
-	coFounderExist:null,
-	coFoundersFirstName : null,
-	coFoundersLastName : null,
-	startUpName : null,
-	state: null,
-	city: null,
-	address: null,
-	industry: null,
-	sector: null,
-	businessDescription: null,
-	image:null
+      contactNumber: null,
+      role: null,
+      coFounderExist: null,
+      coFoundersFirstName: null,
+      coFoundersLastName: null,
+      startUpName: null,
+      state: null,
+      city: null,
+      address: null,
+      industry: null,
+      sector: null,
+      businessDescription: null,
+      image: null,
     });
 
     const user = await User.create({
@@ -104,8 +102,7 @@ export const signup = async (req, res) => {
       email,
       contactNumber,
       password: hashedPassword,
-     
-      
+
       additionalDetails: profileDetails._id,
       image: "",
     });
@@ -124,6 +121,8 @@ export const signup = async (req, res) => {
   }
 };
 
+
+
 // Login controller for authenticating users
 export const login = async (req, res) => {
   try {
@@ -132,34 +131,61 @@ export const login = async (req, res) => {
 
     // Check if email or password is missing
     if (!email || !password) {
-      // Return 400 Bad Request status code with error message
       return res.status(400).json({
         success: false,
         message: `Please Fill up All the Required Fields`,
       });
     }
 
-    // Find user with provided email
-    const user = await User.findOne({ email }).populate("additionalDetails");
+    // Check if this is admin login
+    if (
+      email === process.env.ADMIN_EMAIL &&
+      password === process.env.ADMIN_PASSWORD
+    ) {
+      // Find or create admin user
+      let adminUser = await User.findOne({ email }).populate("additionalDetails");
 
-    // If user not found with provided email
-    if (!user) {
-      // Return 401 Unauthorized status code with error message
-      return res.status(401).json({
-        success: false,
-        message: `User is not Registered with Us Please SignUp to Continue`,
-      });
-    }
+      // If admin user not found, create one
+      if (!adminUser) {
+        const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Generate JWT token and Compare Password
-    if (await bcrypt.compare(password, user.password)) {
-      const currentDate = new Date(); // Current date and time
+        // Create the Additional Profile For Admin
+        const profileDetails = await Profile.create({
+          contactNumber: null,
+          role: null,
+          coFounderExist: null,
+          coFoundersFirstName: null,
+          coFoundersLastName: null,
+          startUpName: null,
+          state: null,
+          city: null,
+          address: null,
+          industry: null,
+          sector: null,
+          businessDescription: null,
+          image: null,
+        });
+
+        adminUser = await User.create({
+          firstName: "Admin",
+          lastName: "Admin",
+          email,
+          position: 'Admin', // Changed from role to position
+          password: hashedPassword,
+          additionalDetails: profileDetails._id,
+          image: "",
+        });
+      }
+
+      const currentDate = new Date();
+
+      // Generate JWT token for admin
       const token = jwt.sign(
         {
-          email: user.email,
-          id: user._id,
-          role: user.role,
-          createdAt: currentDate.toISOString(), // Add current date in ISO format
+          email: adminUser.email,
+          id: adminUser._id,
+          position: adminUser.position, // Changed from role to position
+          createdAt: currentDate.toISOString(),
         },
         process.env.JWT_SECRET,
         {
@@ -167,12 +193,12 @@ export const login = async (req, res) => {
         }
       );
 
-      // Save token to user document in database
+      // Log token for debugging
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      console.log("Generated token payload:", decoded);
+      console.log("Generated admin token payload:", decoded);
 
-      user.token = token;
-      user.password = undefined;
+      adminUser.token = token;
+      adminUser.password = undefined;
 
       // Set cookie for token and return success response
       const options = {
@@ -180,27 +206,80 @@ export const login = async (req, res) => {
         httpOnly: true,
       };
 
-      res.cookie("token", token, options).status(200).json({
+      return res.cookie("token", token, options).status(200).json({
         success: true,
         token,
-        user,
-        message: `User Login Success`,
+        user: adminUser,
+        message: `Admin Login Success`,
       });
-    } else {
+    }
+
+    // Regular user login flow
+    // Find user with provided email
+    const user = await User.findOne({ email }).populate("additionalDetails");
+
+    // If user not found with provided email
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: `User is not Registered with Us. Please SignUp to Continue`,
+      });
+    }
+
+    // Compare password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
       return res.status(401).json({
         success: false,
         message: `Password is incorrect`,
       });
     }
+
+    // Generate JWT token for regular user
+    const currentDate = new Date();
+    const token = jwt.sign(
+      {
+        email: user.email,
+        id: user._id,
+        position: user.position, // Changed from role to position
+        createdAt: currentDate.toISOString(),
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "24h",
+      }
+    );
+
+    // Log token for debugging
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log("Generated token payload:", decoded);
+
+    user.token = token;
+    user.password = undefined;
+
+    // Set cookie for token and return success response
+    const options = {
+      expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+      httpOnly: true,
+    };
+
+    res.cookie("token", token, options).status(200).json({
+      success: true,
+      token,
+      user,
+      message: `User Login Success`,
+    });
+
   } catch (error) {
-    console.error(error);
-    // Return 500 Internal Server Error status code with error message
+    console.error("Login error:", error);
     return res.status(500).json({
       success: false,
-      message: `Login Failure Please Try Again`,
+      message: `Login Failure. Please Try Again`,
     });
   }
 };
+
 
 // Send OTP For Email Verification
 export const sendotp = async (req, res) => {

@@ -21,6 +21,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import NotFound from './pages/NotFound';
 import Profile from './pages/Profile';
+import AdminPanel from './pages/Adminpanel';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/profile" element={<Profile/>}/>
             <Route path="/register" element={<Register />} />
+            <Route path='/adminpanel' element={<AdminPanel/>}/>
             <Route path="*" element={<NotFound />} />
             {/* <Route 
               path="/user-panel" 
