@@ -120,8 +120,6 @@ const Navbar = () => {
                 </button>
               </div>
             ) : (
-            
-              /*
               <button
                 onClick={handleLogin}
                 className="flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-cyan-500 via-emerald-500 to-green-500 text-white font-semibold rounded-full hover:from-cyan-600 hover:via-emerald-600 hover:to-green-600 transition-all shadow-md hover:shadow-lg"
@@ -129,8 +127,6 @@ const Navbar = () => {
                 <FaSignInAlt className="text-sm" />
                 Login
               </button>
-              */
-              null
             )}
           </div>
         </div>
@@ -221,8 +217,6 @@ const Navbar = () => {
                 </button>
               </>
             ) : (
-             
-              /*
               <button
                 onClick={handleLogin}
                 className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-gradient-to-r from-cyan-500 via-emerald-500 to-green-500 text-white font-semibold rounded-lg hover:from-cyan-600 hover:via-emerald-600 hover:to-green-600 transition-all shadow-md"
@@ -230,8 +224,6 @@ const Navbar = () => {
                 <FaSignInAlt />
                 Login
               </button>
-              */
-              null
             )}
           </div>
         </nav>
