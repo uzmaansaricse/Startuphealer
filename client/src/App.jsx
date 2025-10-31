@@ -22,14 +22,27 @@ import Register from './pages/Register';
 import NotFound from './pages/NotFound';
 import Profile from './pages/Profile';
 import AdminPanel from './pages/Adminpanel';
+import { useSelector } from 'react-redux';
+import UserLayout from './components/UserLayout';
+
 
 function App() {
+
+  const token = useSelector(state => state.auth.token)
+  const role = useSelector(state => state.auth.role)
+
   return (
     <Router>
       <div className="App relative bg-gray-900 min-h-screen">
+
+        
+
         {/* <AnimatedBackground /> */}
         <div style={{ position: 'relative', zIndex: 1 }}>
+
+          
           <Navbar />
+           
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
@@ -38,7 +51,7 @@ function App() {
             <Route path="/faq" element={<FAQPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/profile" element={<Profile/>}/>
+         
             <Route path="/register" element={<Register />} />
             <Route path='/adminpanel' element={<AdminPanel/>}/>
             <Route path="*" element={<NotFound />} />
@@ -58,6 +71,17 @@ function App() {
                 </ProtectedRoute>
               } 
             /> */}
+          <Route
+            path="/user"
+            element={  
+                <UserLayout />
+
+            }
+          >
+          <Route index element={<Profile/>}  />
+            <Route path="profile" element={<Profile />} />
+          </Route>
+
           </Routes>
           <Footer />
         </div>

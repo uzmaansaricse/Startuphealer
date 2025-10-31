@@ -9,7 +9,7 @@ import { endpoints } from '../services/api';
 import { toast } from 'react-hot-toast';
 import bgimage from '../assets/StartupHealer.png';
 import { useDispatch } from 'react-redux';
-import { setToken } from '../slices/authSlice';
+import { setRole, setToken } from '../slices/authSlice';
 
 
 const Login = () => {
@@ -52,11 +52,12 @@ const Login = () => {
       if (response.data.success) {
         toast.success('Login successful!');
          dispatch(setToken(response.data.token))
+         dispatch(setRole(response.data.user.position))
 
          if(response.data.user.position === 'Admin'){
             navigate('/adminpanel');
          }else{
-          navigate('/profile')
+          navigate('/user/profile')
          }
         
       }
