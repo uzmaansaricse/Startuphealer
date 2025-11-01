@@ -2,6 +2,7 @@
 import express from "express";
 import userRoutes from "./routes/user.js";
 import profileRoutes from "./routes/profile.js";
+import pitchRoutes from "./routes/pitch.js"
 import database from "./config/database.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -58,6 +59,7 @@ cloudinaryConnect();
 // Setting up routes
 app.use("/api/v1/auth", userRoutes);
 app.use("/api/v1/profile", profileRoutes);
+app.use("/api/v1/pitch",pitchRoutes)
 
 // Testing the server
 app.get("/", (req, res) => {

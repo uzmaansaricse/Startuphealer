@@ -39,6 +39,12 @@ const userSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Profile",
     },
+    pitchDecks:[
+      {
+        type : mongoose.Schema.Types.ObjectId,
+        ref:"PitchDeck"
+      }
+    ],
     token: {
       type: String,
     },

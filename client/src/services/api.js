@@ -17,3 +17,19 @@ export const profileEndpoints = {
   UPDATE_PROFILE : BASE_URL + "/profile/updateProfile", 
   UPDATE_PROFILE_PICTURE : BASE_URL + "/profile/updateDisplayPicture", 
 }
+
+// src/services/api.js or similar
+export const pitchDeckEndpoints = {
+  // Create
+  CREATE_PITCH: `${BASE_URL}/pitch/createPitch`,
+
+  // Read
+  GET_MY_PITCH_DECKS: `${BASE_URL}/pitch/myPitchDecks`,
+  GET_PITCH_DECK_BY_ID: `${BASE_URL}/pitch/:pitchId`,
+
+  // Update
+  UPDATE_PITCH_DECK: `${BASE_URL}/pitch/:pitchId`,
+
+  // Delete
+  DELETE_PITCH_DECK: `${BASE_URL}/pitch/:pitchId`,
+};
