@@ -9,7 +9,7 @@ export const createPitch = async (req, res) => {
   try {
     console.log("=== CREATE PITCH REQUEST ===");
     console.log("Body:", req.body);
-    console.log("File:", req.file);
+    console.log("File:", req.files);
     console.log("User:", req.user);
 
     // ✅ FIX 1: Destructure body fields correctly
@@ -46,7 +46,7 @@ export const createPitch = async (req, res) => {
 
     // ✅ FIX 3: Get logo from correct file field
     // Check if file exists before accessing
-    if (!req.file) {
+    if (!req.files) {
       console.log("File not present in request");
       return res.status(400).json({
         success: false,
@@ -54,7 +54,7 @@ export const createPitch = async (req, res) => {
       });
     }
 
-    const logoFile = req.file; // This is the file object from multer
+    const logoFile = req.files.logo; 
 
     console.log("Logo file details:", {
       filename: logoFile.filename,

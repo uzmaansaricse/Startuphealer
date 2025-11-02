@@ -795,11 +795,12 @@ const PitchDeckReview = ({ formData, logoPreview, logoFile, setCurrentStep, setL
         submitData,
         {
           Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
         }
       );
 
-      if (result.success) {
+      console.log(result)
+
+      if (result.data.success) {
         toast.success('Pitch deck created successfully!');
         navigate('/user/dashboard');
       } else {
