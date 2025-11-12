@@ -26,6 +26,7 @@ import { useSelector } from 'react-redux';
 import UserLayout from './components/UserLayout';
 import CreatePitchDeck from './pages/CreatePitchDeck';
 import Certifications from './pages/Certifications';
+import ScrollToTop from './components/ScrollToTop';
 
 
 function App() {
@@ -44,6 +45,8 @@ function App() {
 
           
           <Navbar />
+
+          <ScrollToTop/>
            
           <Routes>
             <Route path="/" element={<HomePage />} />

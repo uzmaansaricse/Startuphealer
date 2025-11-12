@@ -1,4 +1,6 @@
 // src/pages/Services.jsx
+import React, { useState, useEffect, useMemo } from "react";
+import { motion } from "framer-motion";
 import {
   FaCertificate,
   FaBuilding,
@@ -13,10 +15,9 @@ import {
   FaClock,
   FaShieldAlt,
 } from "react-icons/fa";
-import React from "react";
-import { motion } from "framer-motion";
 import bgimage from "../assets/StartupHealer.png";
 
+// Memoized service data to prevent unnecessary re-renders
 const services = [
   {
     title: "Startup India Certificate",
@@ -186,61 +187,214 @@ const services = [
   },
 ];
 
+// Optimized animation variants
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.08,
+      delayChildren: 0.1,
     },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 50 },
+  hidden: { opacity: 0, y: 30 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.5,
+      duration: 0.4,
+      ease: "easeOut",
     },
   },
 };
 
-export default function Services() {
+// Service Card Component - Memoized for performance
+const ServiceCard = React.memo(({ service, index }) => {
+  const handleWhatsAppClick = () => {
+    const phoneNumber = "919610332259";
+    const message = encodeURIComponent(
+      `Hello! I'm interested in ${service.title}. Can you provide more details?`
+    );
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
+  };
+
   return (
-    <motion.section
-      className="py-24 min-h-screen relative bg-fixed bg-cover bg-center"
-      style={{ backgroundImage: `url(${bgimage})` }}
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
-      viewport={{ once: true }}
+    <motion.div
+      className={`group relative p-8 rounded-2xl shadow-lg
+        bg-white/95 backdrop-blur-md border-2 border-cyan-100
+        transition-all duration-300
+        hover:shadow-2xl hover:border-cyan-300 hover:-translate-y-2
+        bg-gradient-to-br ${service.color} flex flex-col h-full`}
+      variants={itemVariants}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
     >
+      {/* Decorative corner accent */}
+      <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-cyan-100/50 to-transparent rounded-bl-full" />
+
+      {/* Icon */}
+      <div
+        className={`relative flex items-center justify-center w-16 h-16 rounded-2xl bg-white shadow-md mb-4 
+        group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}
+      >
+        <service.icon className={`text-4xl ${service.iconColor}`} />
+      </div>
+
+      {/* Title */}
+      <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-cyan-700 transition-colors">
+        {service.title}
+      </h3>
+
+      {/* Short Description */}
+      <p className="text-gray-600 text-sm mb-3 leading-relaxed">
+        {service.description}
+      </p>
+
+      {/* Detailed Description */}
+      <p className="text-gray-500 text-xs mb-4 leading-relaxed italic">
+        {service.detailedDesc}
+      </p>
+
+      {/* Timeline & Price */}
+      <div className="flex justify-between items-center mb-4 text-xs">
+        <div className="flex items-center gap-1 text-gray-600">
+          <FaClock className="text-cyan-600" />
+          <span>{service.timeline}</span>
+        </div>
+        <div className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-emerald-600">
+          {service.price}
+        </div>
+      </div>
+
+      {/* Features */}
+      <ul className="space-y-2 mb-4 flex-grow">
+        {service.features.map((feature, fIdx) => (
+          <li
+            key={fIdx}
+            className="flex items-start text-gray-700 text-xs"
+          >
+            <span className="mr-2 mt-0.5 flex-shrink-0 w-4 h-4 rounded-full bg-cyan-100 flex items-center justify-center">
+              <span className="text-cyan-600 font-bold text-[10px]">✓</span>
+            </span>
+            <span>{feature}</span>
+          </li>
+        ))}
+      </ul>
+
+      {/* Benefits */}
+      <div className="mb-4 pt-4 border-t border-cyan-100">
+        <p className="text-xs font-semibold text-gray-700 mb-2">
+          Key Benefits:
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {service.benefits.map((benefit, bIdx) => (
+            <span
+              key={bIdx}
+              className="text-[10px] bg-cyan-100 text-cyan-700 px-2 py-1 rounded-full border border-cyan-200"
+            >
+              {benefit}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* CTA Button */}
+      <motion.button
+        onClick={handleWhatsAppClick}
+        className="w-full py-3 px-4 bg-gradient-to-r from-cyan-500 via-emerald-500 to-green-500 text-white font-semibold rounded-lg 
+          shadow-md hover:shadow-lg hover:from-cyan-600 hover:via-emerald-600 hover:to-green-600 transition-all duration-300"
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+      >
+        Get Started
+      </motion.button>
+    </motion.div>
+  );
+});
+
+ServiceCard.displayName = 'ServiceCard';
+
+export default function Services() {
+  const [bgLoaded, setBgLoaded] = useState(false);
+
+  // Preload background image
+  useEffect(() => {
+    const img = new Image();
+    img.src = bgimage;
+    img.onload = () => setBgLoaded(true);
+    img.onerror = () => setBgLoaded(true);
+  }, []);
+
+  // Memoize why choose items
+  const whyChooseItems = useMemo(
+    () => [
+      {
+        icon: FaShieldAlt,
+        title: "100% Secure",
+        desc: "Your data is safe with us",
+        color: "text-cyan-600",
+      },
+      {
+        icon: FaClock,
+        title: "Fast Delivery",
+        desc: "Quick turnaround times",
+        color: "text-teal-600",
+      },
+      {
+        icon: FaCheckCircle,
+        title: "Expert Support",
+        desc: "Experienced professionals",
+        color: "text-emerald-600",
+      },
+      {
+        icon: FaRocket,
+        title: "Results Focused",
+        desc: "Measurable outcomes",
+        color: "text-green-600",
+      },
+    ],
+    []
+  );
+
+  return (
+    <section className="py-24 min-h-screen relative">
+      {/* Background Layer - Optimized */}
+      <div
+        className={`fixed inset-0 bg-cover bg-center bg-fixed transition-opacity duration-700 -z-10 ${
+          bgLoaded ? "opacity-100" : "opacity-0"
+        }`}
+        style={{ backgroundImage: bgLoaded ? `url(${bgimage})` : "none" }}
+      />
+
+      {/* Fallback background */}
+      <div className="fixed inset-0 bg-gradient-to-b from-cyan-50 via-emerald-50 to-green-50 -z-20" />
+
       {/* Light overlay with blue-green gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white/50 via-cyan-50/40 to-emerald-50/50 pointer-events-none" />
+      <div className="fixed inset-0 bg-gradient-to-b from-white/50 via-cyan-50/40 to-emerald-50/50 -z-10" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading */}
         <motion.div
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4">
             Our{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-emerald-600 to-green-600">
               Services
             </span>
-          </h2>
+          </h1>
           <div className="w-24 h-1.5 bg-gradient-to-r from-cyan-500 via-emerald-500 to-green-500 mx-auto rounded-full shadow-md mb-6"></div>
-          <p className="text-gray-700 text-base md:text-lg max-w-3xl mx-auto leading-relaxed mb-4">
+          <p className="text-gray-700 text-base md:text-lg max-w-3xl mx-auto leading-relaxed mb-6">
             Comprehensive solutions designed to help startups grow smarter,
             faster, and stronger — from compliance to scale.
           </p>
-          <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-600">
+          <div className="flex flex-wrap justify-center gap-4 md:gap-6 text-sm text-gray-600">
             <div className="flex items-center gap-2">
               <FaCheckCircle className="text-cyan-600" />
               <span>Expert Guidance</span>
@@ -262,189 +416,69 @@ export default function Services() {
 
         {/* Services Grid */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-20"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.1 }}
         >
           {services.map((service, idx) => (
-            <motion.div
-              key={idx}
-              className={`group relative p-8 rounded-2xl shadow-lg
-                bg-white/95 backdrop-blur-md border-2 border-cyan-100
-                transition-all duration-300
-                hover:shadow-2xl hover:border-cyan-300 hover:-translate-y-2
-                bg-gradient-to-br ${service.color} flex flex-col h-full`}
-              variants={itemVariants}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              {/* Decorative corner accent */}
-              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-cyan-100/50 to-transparent rounded-bl-full" />
-
-              {/* Icon */}
-              <div
-                className={`relative flex items-center justify-center w-16 h-16 rounded-2xl bg-white shadow-md mb-4 
-                group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}
-              >
-                {React.createElement(service.icon, {
-                  className: `text-4xl ${service.iconColor}`,
-                })}
-              </div>
-
-              {/* Title */}
-              <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-cyan-700 transition-colors">
-                {service.title}
-              </h3>
-
-              {/* Short Description */}
-              <p className="text-gray-600 text-sm mb-3 leading-relaxed">
-                {service.description}
-              </p>
-
-              {/* Detailed Description */}
-              <p className="text-gray-500 text-xs mb-4 leading-relaxed italic">
-                {service.detailedDesc}
-              </p>
-
-              {/* Timeline & Price */}
-              <div className="flex justify-between items-center mb-4 text-xs">
-                <div className="flex items-center gap-1 text-gray-600">
-                  <FaClock className="text-cyan-600" />
-                  <span>{service.timeline}</span>
-                </div>
-                <div className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-emerald-600">
-                  {service.price}
-                </div>
-              </div>
-
-              {/* Features */}
-              <ul className="space-y-2 mb-4 flex-grow">
-                {service.features.map((feature, fIdx) => (
-                  <li
-                    key={fIdx}
-                    className="flex items-start text-gray-700 text-xs"
-                  >
-                    <span className="mr-2 mt-0.5 flex-shrink-0 w-4 h-4 rounded-full bg-cyan-100 flex items-center justify-center">
-                      <span className="text-cyan-600 font-bold text-[10px]">
-                        ✓
-                      </span>
-                    </span>
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              {/* Benefits */}
-              <div className="mb-4 pt-4 border-t border-cyan-100">
-                <p className="text-xs font-semibold text-gray-700 mb-2">
-                  Key Benefits:
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {service.benefits.map((benefit, bIdx) => (
-                    <span
-                      key={bIdx}
-                      className="text-[10px] bg-cyan-100 text-cyan-700 px-2 py-1 rounded-full border border-cyan-200"
-                    >
-                      {benefit}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* CTA Button */}
-              <motion.button
-                onClick={() => {
-                  // WhatsApp link with Indian country code (+91)
-                  const phoneNumber = "919610332259"; // Add 91 for India
-                  const message = encodeURIComponent(
-                    "Hello! I want to get started with StartupHealer."
-                  );
-                  window.open(
-                    `https://wa.me/${phoneNumber}?text=${message}`,
-                    "_blank"
-                  );
-                }}
-                className="w-full py-3 px-4 bg-gradient-to-r from-cyan-500 via-emerald-500 to-green-500 text-white font-semibold rounded-lg 
-    shadow-md hover:shadow-lg hover:from-cyan-600 hover:via-emerald-600 hover:to-green-600 transition-all duration-300"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Get Started
-              </motion.button>
-            </motion.div>
+            <ServiceCard key={service.title} service={service} index={idx} />
           ))}
         </motion.div>
 
         {/* Why Choose Our Services */}
         <motion.div
-          className="mb-20 bg-white/95 backdrop-blur-md rounded-3xl shadow-xl p-10 border-2 border-cyan-200"
-          initial={{ opacity: 0, y: 30 }}
+          className="mb-20 bg-white/95 backdrop-blur-md rounded-3xl shadow-xl p-8 md:p-10 border-2 border-cyan-200"
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true, amount: 0.3 }}
         >
-          <h3 className="text-3xl font-bold text-gray-800 mb-8 text-center">
+          <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
             Why Choose StartupHealer Services?
-          </h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              {
-                icon: FaShieldAlt,
-                title: "100% Secure",
-                desc: "Your data is safe with us",
-                color: "text-cyan-600",
-              },
-              {
-                icon: FaClock,
-                title: "Fast Delivery",
-                desc: "Quick turnaround times",
-                color: "text-teal-600",
-              },
-              {
-                icon: FaCheckCircle,
-                title: "Expert Support",
-                desc: "Experienced professionals",
-                color: "text-emerald-600",
-              },
-              {
-                icon: FaRocket,
-                title: "Results Focused",
-                desc: "Measurable outcomes",
-                color: "text-green-600",
-              },
-            ].map((item, idx) => (
-              <div key={idx} className="text-center">
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {whyChooseItems.map((item, idx) => (
+              <motion.div
+                key={item.title}
+                className="text-center"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1, duration: 0.4 }}
+                viewport={{ once: true }}
+              >
                 <div className="w-16 h-16 bg-gradient-to-br from-cyan-100 via-emerald-100 to-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
                   <item.icon className={`${item.color} text-3xl`} />
                 </div>
-                <h4 className="font-bold text-gray-800 mb-2">{item.title}</h4>
-                <p className="text-gray-600 text-sm">{item.desc}</p>
-              </div>
+                <h4 className="font-bold text-gray-800 mb-2 text-sm md:text-base">
+                  {item.title}
+                </h4>
+                <p className="text-gray-600 text-xs md:text-sm">{item.desc}</p>
+              </motion.div>
             ))}
           </div>
         </motion.div>
 
         {/* Bottom CTA */}
         <motion.div
-          className="text-center bg-gradient-to-r from-cyan-500 via-emerald-500 to-green-500 rounded-3xl shadow-2xl p-10 text-white"
-          initial={{ opacity: 0, y: 30 }}
+          className="text-center bg-gradient-to-r from-cyan-500 via-emerald-500 to-green-500 rounded-3xl shadow-2xl p-8 md:p-10 text-white"
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true, amount: 0.3 }}
         >
-          <h3 className="text-3xl md:text-4xl font-extrabold mb-4">
+          <h3 className="text-2xl md:text-4xl font-extrabold mb-4">
             Ready to Transform Your Startup?
           </h3>
-          <p className="text-cyan-50 text-lg mb-8 max-w-2xl mx-auto">
+          <p className="text-cyan-50 text-base md:text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
             Choose any service or get a custom package tailored to your needs.
             Free consultation included!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <motion.a
               href="/contact"
-              className="inline-block bg-white text-cyan-600 px-10 py-4 rounded-full font-semibold shadow-lg hover:shadow-xl hover:bg-cyan-50 transition-all duration-300"
+              className="inline-block bg-white text-cyan-600 px-8 md:px-10 py-3 md:py-4 rounded-full font-semibold shadow-lg hover:shadow-xl hover:bg-cyan-50 transition-all duration-300 text-sm md:text-base"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -452,7 +486,7 @@ export default function Services() {
             </motion.a>
             <motion.a
               href="tel:9610332259"
-              className="inline-block bg-transparent border-2 border-white text-white px-10 py-4 rounded-full font-semibold hover:bg-white hover:text-cyan-600 transition-all duration-300"
+              className="inline-block bg-transparent border-2 border-white text-white px-8 md:px-10 py-3 md:py-4 rounded-full font-semibold hover:bg-white hover:text-cyan-600 transition-all duration-300 text-sm md:text-base"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -461,6 +495,6 @@ export default function Services() {
           </div>
         </motion.div>
       </div>
-    </motion.section>
+    </section>
   );
 }

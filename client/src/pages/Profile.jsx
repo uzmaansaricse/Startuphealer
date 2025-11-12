@@ -223,7 +223,7 @@ const Profile = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-cyan-50 to-emerald-50 mt-16">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-cyan-50 to-emerald-50">
         <div className="text-2xl font-bold bg-gradient-to-r from-cyan-600 to-emerald-600 bg-clip-text text-transparent">
           Loading...
         </div>
@@ -234,7 +234,7 @@ const Profile = () => {
 
   return (
     <div
-      className="min-h-screen relative overflow-hidden mt-16 bg-cover bg-center"
+      className="min-h-screen relative overflow-hidden  bg-cover bg-center"
       style={{ backgroundImage: `url(${bgimage})` }}
     >
       <div className="absolute inset-0 bg-gradient-to-br from-white/50 via-cyan-50/40 to-emerald-50/50" />
@@ -712,7 +712,7 @@ const Step5ProfilePicture = ({ userData, setUserData, handleNext, handleBack }) 
 
         // Compress image if larger than 50KB
         if (file.size > 50 * 1024) {
-          toast.info('Compressing image for faster upload...');
+          toast.success('Compressing image for faster upload...');
           processedFile = await compressImage(file, 2);
 
 

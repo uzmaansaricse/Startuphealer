@@ -3,7 +3,7 @@ import Services from '../components/Services';
 
 const ServicesPage = () => {
   return (
-    <div className="pt-16">
+    <div className="">
       <Services />
     </div>
   );

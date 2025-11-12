@@ -3,7 +3,7 @@ import Testimonials from '../components/Testimonials';
 
 const TestimonialsPage = () => {
   return (
-    <div className="pt-16">
+    <div className="">
       <Testimonials />
     </div>
   );

@@ -245,7 +245,7 @@ const Certifications = () => {
 
   return (
     <div
-      className="min-h-screen relative overflow-hidden mt-16 bg-cover bg-center"
+      className="min-h-screen relative overflow-hidden bg-cover bg-center"
       style={{ backgroundImage: `url(${bgimage})` }}
     >
       <div className="absolute inset-0 bg-gradient-to-br from-white/50 via-cyan-50/40 to-emerald-50/50" />

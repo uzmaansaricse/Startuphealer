@@ -9,7 +9,7 @@ import bgimage from '../assets/StartupHealer.png';
 const NotFound = () => {
   return (
     <div
-      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-cover bg-center mt-20 lg:mt-16"
+      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-cover bg-center"
       style={{
         backgroundImage: `url(${bgimage})`,
       }}

@@ -3,7 +3,7 @@ import FAQ from '../components/FAQ';
 
 const FAQPage= () => {
   return (
-    <div className="pt-16">
+    <div className="">
       <FAQ />
     </div>
   );
