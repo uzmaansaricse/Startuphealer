@@ -25,6 +25,7 @@ import AdminPanel from './pages/Adminpanel';
 import { useSelector } from 'react-redux';
 import UserLayout from './components/UserLayout';
 import CreatePitchDeck from './pages/CreatePitchDeck';
+import Certifications from './pages/Certifications';
 
 
 function App() {
@@ -82,6 +83,7 @@ function App() {
           <Route index element={<Profile/>}  />
             <Route path="profile" element={<Profile />} />
             <Route path='services/pitch-deck' element={<CreatePitchDeck/>}/>
+            <Route path='services/certifications' element={<Certifications/>}/>
           </Route>
 
           </Routes>
