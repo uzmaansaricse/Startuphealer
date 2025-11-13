@@ -218,7 +218,7 @@ const Navbar = () => {
               <Link to="/" className="flex items-center gap-3 group">
                 <motion.img
                   
-                  src="/st_logo.jpeg"
+                  src="/st_logo1.png"
                   alt="StartupHealer Logo"
                   className="h-10 ml-12 lg:ml-0 lg:h-12 rounded-3xl   "
                 />
@@ -417,7 +417,7 @@ const Navbar = () => {
             <div className="sticky top-0 bg-gradient-to-r from-cyan-500 via-emerald-500 to-green-500 p-4 flex justify-between items-center shadow-md">
               <Link to="/" onClick={closeSidebar} className="flex items-center gap-3">
                
-                <span className="font-bold text-xl text-white">
+                <span className="font-bold text-2xl text-white absolute left-1/2 -translate-x-1/2 ">
                   StartupHealer
                 </span>
               </Link>
@@ -539,12 +539,12 @@ const Navbar = () => {
               </div>
 
               {/* Bottom Logo Section */}
-              <div className="mt-6 pt-4 border-t-2 border-cyan-200">
-                <div className="px-4 py-4 bg-gradient-to-r from-cyan-50 to-emerald-50 rounded-xl">
+              <div className="mt-5">
+                <div className="px-6 py-  from-cyan-50 to-emerald-50 rounded-xl flex justify-center">
                   <img
-                    src="/st_logo.jpeg"
+                    src="/st_logo1.png"
                     alt="StartupHealer Logo"
-                    className="w-full h-auto rounded-lg shadow-md"
+                    className="w-36 h-auto rounded-lg "
                   />
                 </div>
               </div>
