@@ -417,7 +417,7 @@ const Navbar = () => {
             <div className="sticky top-0 bg-gradient-to-r from-cyan-500 via-emerald-500 to-green-500 p-4 flex justify-between items-center shadow-md">
               <Link to="/" onClick={closeSidebar} className="flex items-center gap-3">
                
-                <span className="font-bold text-2xl text-white absolute left-1/2 -translate-x-1/2 ">
+                <span className="font-bold text-2xl text-white ">
                   StartupHealer
                 </span>
               </Link>
