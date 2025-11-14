@@ -196,7 +196,7 @@ const Register = () => {
 
   return (
     <div 
-      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-cover bg-center bg-no-repeat mt-20 lg:mt-16"
+      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-cover bg-center bg-no-repeat "
       style={{
         backgroundImage: `url(${bgimage})`,
         backgroundColor: '#E8F5F3'
