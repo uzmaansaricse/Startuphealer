@@ -33,3 +33,22 @@ export const pitchDeckEndpoints = {
   // Delete
   DELETE_PITCH_DECK: `${BASE_URL}/pitch/:pitchId`,
 };
+
+export const employeeEndpoints = {
+  // Create
+  CREATE_EMPLOYEE: `${BASE_URL}/employee/employees`,
+
+  // Read
+  GET_ALL_EMPLOYEES: `${BASE_URL}/employee/employees`,
+  GET_EMPLOYEE_BY_ID: `${BASE_URL}/employee/employees/:id`,
+
+  // Update
+  UPDATE_EMPLOYEE: `${BASE_URL}/employee/employees/:id`,
+
+  // Delete
+  DELETE_EMPLOYEE: `${BASE_URL}/employee/employees/:id`,
+
+  // Additional Actions
+  RESET_EMPLOYEE_PASSWORD: `${BASE_URL}/employee/employees/:id/reset-password`,
+};
+

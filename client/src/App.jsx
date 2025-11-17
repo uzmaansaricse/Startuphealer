@@ -27,6 +27,8 @@ import UserLayout from './components/UserLayout';
 import CreatePitchDeck from './pages/CreatePitchDeck';
 import Certifications from './pages/Certifications';
 import ScrollToTop from './components/ScrollToTop';
+import AdminLayout from './components/AdminLayout';
+import ManageUsers from './pages/ManageUsers';
 
 
 function App() {
@@ -76,6 +78,14 @@ function App() {
                 </ProtectedRoute>
               } 
             /> */}
+
+              {/* Admin Routes */}
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<AdminLayout />} />
+          <Route path="employees" element={<ManageUsers />} />
+        
+        </Route>
+
           <Route
             path="/user"
             element={  

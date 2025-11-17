@@ -55,7 +55,7 @@ const Login = () => {
          dispatch(setRole(response.data.user.position))
 
          if(response.data.user.position === 'Admin'){
-            navigate('/adminpanel');
+            navigate('/admin/employees');
          }else{
           navigate('/user/profile')
          }

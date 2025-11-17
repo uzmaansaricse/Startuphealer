@@ -31,9 +31,13 @@ const userSchema = new mongoose.Schema(
     },
     position: {
       type: String,
-      enum: ['Admin', 'User'],
+      enum: ['Admin', 'User','Employee'],
       default: 'User',
       required: true,
+    },
+    employeeDetails:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref:"Employee",
     },
     additionalDetails: {
       type: mongoose.Schema.Types.ObjectId,
